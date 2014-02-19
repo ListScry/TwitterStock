@@ -14,6 +14,7 @@ public class TestDriver {
         YQLQueryClient.init();
         YQLHistoricalDataParser.init();
 
+        //Example of query
         /*
         String result = YQLQueryClient.queryJSON("select * from yahoo.finance.historicaldata where symbol in" +
                 " (\"MSFT\",\"GOOG\", \"AAPL\") and startDate = \"2014-01-01\" and endDate = \"2014-02-17\"");
