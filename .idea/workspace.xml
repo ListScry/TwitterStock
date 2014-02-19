@@ -67,15 +67,8 @@
       <file leaf-file-name="java.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="164" column="0" selection-start="5452" selection-end="5452" vertical-scroll-proportion="0.0" vertical-offset="1661" max-vertical-offset="2584">
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#printStatus#0;class#java#0" expanded="false" />
-                <element signature="method#printResults#0;class#java#0" expanded="false" />
-                <element signature="method#addDay#0;class#java#0" expanded="false" />
-                <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-                <element signature="e#4322#4330#0" expanded="true" />
-              </folding>
+            <state line="164" column="0" selection-start="5452" selection-end="5452" vertical-scroll-proportion="0.0" vertical-offset="2788" max-vertical-offset="3247">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,7 +76,7 @@
       <file leaf-file-name="TestDriver.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/YQL/TestDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="31" selection-start="567" selection-end="567" vertical-scroll-proportion="0.5400908" vertical-offset="0" max-vertical-offset="661">
+            <state line="31" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="0.5709643" vertical-offset="0" max-vertical-offset="923">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,10 +87,8 @@
       <file leaf-file-name="YQLQueryClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/YQL/YQLQueryClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="5" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.0" vertical-offset="733" max-vertical-offset="1394">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="70" column="5" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="1394">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,9 +97,7 @@
         <entry file="file://$PROJECT_DIR$/src/YQL/YQLHistoricalDataParser.java">
           <provider selected="true" editor-type-id="text-editor">
             <state line="23" column="0" selection-start="646" selection-end="646" vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="765">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -167,6 +156,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,7 +228,6 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,19 +346,6 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -395,6 +371,19 @@
       <envs />
       <properties />
       <listeners />
+      <method />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -495,7 +484,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -507,7 +496,6 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771337" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -518,8 +506,9 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32771337" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -546,57 +535,59 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="176" column="36" selection-start="5762" selection-end="5762" vertical-scroll-proportion="0.0" vertical-offset="2584" max-vertical-offset="2584">
+        <state line="164" column="0" selection-start="5452" selection-end="5452" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3247">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/YQL/TestDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="31" selection-start="567" selection-end="567" vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="629">
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="method#printStatus#0;class#java#0" expanded="false" />
-            <element signature="method#printResults#0;class#java#0" expanded="false" />
-            <element signature="method#addDay#0;class#java#0" expanded="false" />
-            <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-            <element signature="e#4322#4330#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/YQL/YQLQueryClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="70" column="5" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="1394">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/YQL/YQLHistoricalDataParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="646" selection-end="646" vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="176" column="36" selection-start="5762" selection-end="5762" vertical-scroll-proportion="0.0" vertical-offset="2584" max-vertical-offset="2584">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="62" column="38" selection-start="1875" selection-end="1875" vertical-scroll-proportion="0.0" vertical-offset="935" max-vertical-offset="1904">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#printStatus#0;class#java#0" expanded="false" />
-            <element signature="method#printResults#0;class#java#0" expanded="false" />
-            <element signature="method#addDay#0;class#java#0" expanded="false" />
-            <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-            <element signature="e#4322#4330#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="92" column="40" selection-start="2912" selection-end="2912" vertical-scroll-proportion="0.0" vertical-offset="1564" max-vertical-offset="1819">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#printStatus#0;class#java#0" expanded="false" />
-            <element signature="method#printResults#0;class#java#0" expanded="false" />
-            <element signature="method#addDay#0;class#java#0" expanded="false" />
-            <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-            <element signature="e#4322#4330#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="89" column="31" selection-start="2849" selection-end="2849" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="1485">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#printStatus#0;class#java#0" expanded="false" />
-            <element signature="method#printResults#0;class#java#0" expanded="false" />
-            <element signature="method#addDay#0;class#java#0" expanded="false" />
-            <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-            <element signature="e#4322#4330#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -610,38 +601,27 @@
     <entry file="file://$PROJECT_DIR$/src/YQL/YQLQueryClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="70" column="5" selection-start="2223" selection-end="2223" vertical-scroll-proportion="0.0" vertical-offset="733" max-vertical-offset="1394">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/YQL/YQLHistoricalDataParser.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="646" selection-end="646" vertical-scroll-proportion="0.0" vertical-offset="104" max-vertical-offset="765">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/SearchTwitter/java.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="164" column="0" selection-start="5452" selection-end="5452" vertical-scroll-proportion="0.0" vertical-offset="1661" max-vertical-offset="2584">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#printStatus#0;class#java#0" expanded="false" />
-            <element signature="method#printResults#0;class#java#0" expanded="false" />
-            <element signature="method#addDay#0;class#java#0" expanded="false" />
-            <element signature="method#queryWeek#0;class#java#0" expanded="false" />
-            <element signature="e#4322#4330#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/YQL/TestDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="31" selection-start="567" selection-end="567" vertical-scroll-proportion="0.5400908" vertical-offset="0" max-vertical-offset="661">
+        <state line="31" column="0" selection-start="949" selection-end="949" vertical-scroll-proportion="0.5709643" vertical-offset="0" max-vertical-offset="923">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
