@@ -10,12 +10,20 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-core-3.0.5.jar!/" />
+          <root url="jar://$MODULE_DIR$/libs/twitter4j-core-3.0.5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="gson-2.2.4" level="project" />
+    <orderEntry type="library" name="commons-io-2.4" level="project" />
+    <orderEntry type="library" name="gson-2.2.4-javadoc" level="project" />
+    <orderEntry type="library" name="httpcore-4.3.1" level="project" />
+    <orderEntry type="library" name="httpclient-4.3.2" level="project" />
+    <orderEntry type="library" name="httpclient-cache-4.3.2" level="project" />
+    <orderEntry type="library" name="httpmime-4.3.2" level="project" />
+    <orderEntry type="library" name="commons-logging-1.1.3" level="project" />
   </component>
 </module>
 
