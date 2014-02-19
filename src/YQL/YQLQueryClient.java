@@ -13,6 +13,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.List;
 
 /**
  * Created by Stefan Anders Mellem on 2/16/14.
@@ -55,6 +56,18 @@ public final class YQLQueryClient{
             ioe.printStackTrace();
         }
         return writer.toString();
+    }
+
+    /* dates in YYYY-MM-DD */
+    public static String getHistoricalDataQueryString(List<String> symbols, String startDate, String endDate){
+        String qstr = "select * from yahoo.finance.historicaldata where symbol in (";
+        for (int i=0; i<symbols.size(); i++){
+            if (i!=0)
+                qstr += ",";
+            qstr += "\"" + symbols.get(i) + "\"";
+        }
+        qstr += ") and startDate = \"" + startDate + "\" and endDate = \"" + endDate + "\"";
+        return qstr;
     }
 
     public static void init(){
