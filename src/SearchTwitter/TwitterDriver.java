@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 public final class TwitterDriver {
 
     static Twitter twitter;
+    static String curKeyword;
 
     private static void setUpTwitter(){
         //twitter = new TwitterFactory().getSingleton();
@@ -43,7 +44,7 @@ public final class TwitterDriver {
             // Limit the locale to only English
             query.locale("en");
 
-            query.resultType("popular");
+            //query.resultType("popular");
 
             // Set up result
             QueryResult result = twitter.search(query);
@@ -126,9 +127,12 @@ public final class TwitterDriver {
 
     private static ArrayList<Status> queryKeyword(String keyword, Date date){
 
-        int totalTweets = 60;
-        int resultsPerQuery = 15;
+        int totalTweets = 200;
+        int resultsPerQuery = 100;
         int numQueries = totalTweets / resultsPerQuery;
+
+        // Used later when putting data together.
+        curKeyword = keyword;
 
         ArrayList<Status> allStatuses = new ArrayList<Status>();
 
@@ -160,25 +164,60 @@ public final class TwitterDriver {
             }
         }
 
+
+
         return allStatuses;
     }
 
-    public static void main(String[] args) {
 
+    private static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
+
+        ArrayList<TweetData> tweets = new ArrayList<TweetData>();
+
+        // Used to format date to...below format.
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+        TweetData newTweet;
+        for(Status status : statuses){
+            newTweet = new TweetData();
+
+            // Prep with data
+            newTweet.ID         =   "" + status.getId();
+            newTweet.User       =   status.getUser().getScreenName().toString();
+            newTweet.Followers  =   "" + status.getUser().getFollowersCount();
+            newTweet.Retweets   =   "" + status.getRetweetCount();
+            newTweet.TimeStamp  =   formatter.format(status.getCreatedAt());
+            newTweet.Mood       =   "";
+            newTweet.Keyword    =   curKeyword;
+            newTweet.Text       =   status.getText().toString();
+
+            // Add to list
+            tweets.add(newTweet);
+        }
+
+
+        return tweets;
+    }
+
+
+
+    public static void main(String[] args) {
         setUpTwitter();
 
         // Setup
         Date date = Calendar.getInstance().getTime();
-        String keyword = "\"Apple\"";
+        String keyword = "\"AAPL\"";
 
         // Do Query
-        ArrayList<Status> tweets = queryKeyword(keyword,date);
+        ArrayList<Status> statuses = queryKeyword(keyword,date);
+        ArrayList<TweetData> tweets = convertStatusToTweet(statuses);
+
 
         // Do Something With Tweets 
         System.out.println("Total Tweets:" + tweets.size());
-        /*for(Status status : tweets){
-            System.out.println(status.getCreatedAt());
-        }*/
+        for(TweetData tweet : tweets){
+            System.out.println( tweet.toString() );
+        }
 
 
     }
