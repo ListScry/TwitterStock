@@ -16,7 +16,7 @@ public final class TwitterDriver {
     static Twitter twitter;
     static String curKeyword;
 
-    private static void setUpTwitter(){
+    public static void setUpTwitter(){
         //twitter = new TwitterFactory().getSingleton();
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
@@ -30,7 +30,7 @@ public final class TwitterDriver {
     }
 
 
-    private static QueryResult performQuery(String keyword, long id_before){
+    public static QueryResult performQuery(String keyword, long id_before){
         try{
             // Set up query
             Query query = new Query();
@@ -60,7 +60,7 @@ public final class TwitterDriver {
     }
 
     // Get earliest tweet - used to query for "only tweets older than X"
-    private static long oldestResult(QueryResult result){
+    public static long oldestResult(QueryResult result){
 
         long earliestID = result.getTweets().get(0).getId();
         for( Status status : result.getTweets() ){
@@ -72,11 +72,11 @@ public final class TwitterDriver {
     }
 
     // temporary - delete later
-    private static void printIDs(QueryResult result){
+    public static void printIDs(QueryResult result){
         for( Status status : result.getTweets() ){  System.out.println("" + status.getId());    }
     }
 
-    private static void printStatus(Status status){
+    public static void printStatus(Status status){
         String message = status.getText();
         String username = status.getUser().getScreenName();
         String date = status.getCreatedAt().toString();
@@ -86,7 +86,7 @@ public final class TwitterDriver {
         System.out.println("\t" + date);
     }
 
-    private static void printResults(QueryResult result){
+    public static void printResults(QueryResult result){
         int numTweets = result.getCount();
 
 
@@ -97,7 +97,7 @@ public final class TwitterDriver {
         System.out.println(result.getTweets().size());
     }
 
-    private static Date addDay(Date date, int num){
+    public static Date addDay(Date date, int num){
         // LOL this is awful.
         // Only way I can find to subtract a day from a Date object
         Calendar tempCal = Calendar.getInstance();
@@ -109,7 +109,7 @@ public final class TwitterDriver {
 
     // Helper method to perform queries for the entire week
     // TODO: actually add the performQuery portion of this
-    private static void queryWeek(){
+    public static void queryWeek(){
         String startDate_str, endDate_str;
         Date startDate,endDate;
 
@@ -125,7 +125,7 @@ public final class TwitterDriver {
         }
     }
 
-    private static ArrayList<Status> queryKeyword(String keyword, Date date){
+    public static ArrayList<Status> queryKeyword(String keyword, Date date){
 
         int totalTweets = 200;
         int resultsPerQuery = 100;
@@ -170,7 +170,7 @@ public final class TwitterDriver {
     }
 
 
-    private static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
+    public static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
 
         ArrayList<TweetData> tweets = new ArrayList<TweetData>();
 
@@ -201,7 +201,7 @@ public final class TwitterDriver {
 
 
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         setUpTwitter();
 
         // Setup
@@ -220,5 +220,5 @@ public final class TwitterDriver {
         }
 
 
-    }
+    }*/
 }
