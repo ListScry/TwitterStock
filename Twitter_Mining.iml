@@ -26,6 +26,16 @@
     <orderEntry type="library" name="stanford-corenlp-3.3.1-javadoc" level="project" />
     <orderEntry type="library" name="stanford-corenlp-3.3.1-models" level="project" />
     <orderEntry type="library" name="stanford-corenlp-3.3.1-models (2)" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.0" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.0-javadoc" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.1-models" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.1-models" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.1-models (2)" level="project" />
+    <orderEntry type="library" name="ejml-0.23" level="project" />
+    <orderEntry type="library" name="joda-time" level="project" />
+    <orderEntry type="library" name="jollyday" level="project" />
+    <orderEntry type="library" name="xom" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.0-models" level="project" />
   </component>
 </module>
 
