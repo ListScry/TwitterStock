@@ -36,6 +36,9 @@
     <orderEntry type="library" name="jollyday" level="project" />
     <orderEntry type="library" name="xom" level="project" />
     <orderEntry type="library" name="stanford-corenlp-3.3.0-models" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.1-models" level="project" />
+    <orderEntry type="library" name="stanford-corenlp-3.3.1-models (2)" level="project" />
+    <orderEntry type="library" name="AlchemyAPI" level="project" />
   </component>
 </module>
 
