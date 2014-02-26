@@ -65,7 +65,7 @@ public class SentimentAnalyzer {
     public static void main(String[] args) {
         SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
         TweetWithSentiment tweetWithSentiment = sentimentAnalyzer
-                .findSentiment("click here for your Sachin Tendulkar personalized digital autograph.");
+                .findSentiment("happy good awesome! this tweet is really positive!");
         System.out.println(tweetWithSentiment);
     }
 }
