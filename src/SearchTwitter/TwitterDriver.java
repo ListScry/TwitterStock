@@ -173,6 +173,9 @@ public final class TwitterDriver {
         return allStatuses;
     }
 
+    public static void setMood(TweetData tweet){
+        tweet.Mood = Float.toString(SentimentAnalyzer.findSentiment(tweet.Text));
+    }
 
     public static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
 
@@ -196,7 +199,7 @@ public final class TwitterDriver {
             newTweet.Text       =   status.getText().toString();
 
             // Calculate and set Mood
-            newTweet.Mood       =   Float.toString(SentimentAnalyzer.findSentiment(newTweet.Text));
+            setMood(newTweet);
 
             // Add to list
             tweets.add(newTweet);

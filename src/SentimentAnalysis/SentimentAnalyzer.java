@@ -25,12 +25,14 @@ public class SentimentAnalyzer {
         if (line != null && line.length() > 0) {
             Annotation annotation = pipeline.process(line);
 
+            System.out.println(line);
             for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
                 Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
-                //System.out.println(" " + tree.toString());
 
                 int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
-                //System.out.println("  " + sentiment);
+                System.out.println(" -  " + sentence.toString());
+                System.out.println("  = " + tree.toString());
+                System.out.println("   > " + sentiment);
 
                 totalSentiment += sentiment;
                 count++;

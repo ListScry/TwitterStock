@@ -237,17 +237,17 @@ public class Driver {
 
     public static void main(String[] args) {
         // Gets tweets from Twitter
-        //runTwitter();
+        runTwitter();
 
         // Gets stocks form Yahoo
-        //runStocks();
+        runStocks();
 
         // Write data to file
-        //writeFiles();
+        writeFiles();
 
         //inputFiles();
 
-        initDB();
+        //initDB();
 
     }
 
