@@ -1,5 +1,6 @@
 package SearchTwitter;
 
+import SentimentAnalysis.SentimentAnalyzer;
 import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -27,6 +28,9 @@ public final class TwitterDriver {
                 .setOAuthAccessTokenSecret("l0Wr5r2Y3djYZPLFvGYnz5JBrOaXrt2Zt6wSkIaMnJsvY");
         TwitterFactory tf = new TwitterFactory(cb.build());
         twitter = tf.getInstance();
+
+        //for calculating mood values of each tweet as we convert from Status to TweetData
+        SentimentAnalyzer.init();
     }
 
 
@@ -187,9 +191,12 @@ public final class TwitterDriver {
             newTweet.Followers  =   "" + status.getUser().getFollowersCount();
             newTweet.Retweets   =   "" + status.getRetweetCount();
             newTweet.TimeStamp  =   formatter.format(status.getCreatedAt());
-            newTweet.Mood       =   "";
+            // Mood goes here, sequentially
             newTweet.Keyword    =   curKeyword;
             newTweet.Text       =   status.getText().toString();
+
+            // Calculate and set Mood
+            newTweet.Mood       =   Float.toString(SentimentAnalyzer.findSentiment(newTweet.Text));
 
             // Add to list
             tweets.add(newTweet);

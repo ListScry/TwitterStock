@@ -16,21 +16,21 @@ import edu.stanford.nlp.util.CoreMap;
 
 public class SentimentAnalyzer {
 
-    public float findSentiment(String line) {
+    static Properties props;
+    static StanfordCoreNLP pipeline;
 
-        Properties props = new Properties();
-        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
-        StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
+    public static float findSentiment(String line) {
         float totalSentiment = 0.0f;
         int count = 0;
         if (line != null && line.length() > 0) {
-            int longest = 0;
             Annotation annotation = pipeline.process(line);
+
             for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
                 Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
-                System.out.println(" " + tree.toString());
+                //System.out.println(" " + tree.toString());
 
                 int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+                //System.out.println("  " + sentiment);
 
                 totalSentiment += sentiment;
                 count++;
@@ -40,10 +40,15 @@ public class SentimentAnalyzer {
 
     }
 
+    public static void init(){
+        props = new Properties();
+        props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
+        pipeline = new StanfordCoreNLP(props);
+    }
+
     public static void main(String[] args) {
-        SentimentAnalyzer sentimentAnalyzer = new SentimentAnalyzer();
-        float sent = sentimentAnalyzer
-                .findSentiment("meh! this tweet is really positive!");
+        SentimentAnalyzer.init();
+        float sent = SentimentAnalyzer.findSentiment("meh! this tweet is really positive!");
         System.out.println(sent);
     }
 }
