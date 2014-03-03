@@ -30,9 +30,12 @@ public class SentimentAnalyzer {
                 Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
 
                 int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
+
+                /*
                 System.out.println(" -  " + sentence.toString());
                 System.out.println("  = " + tree.toString());
                 System.out.println("   > " + sentiment);
+                */
 
                 totalSentiment += sentiment;
                 count++;
