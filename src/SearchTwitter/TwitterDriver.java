@@ -182,7 +182,7 @@ public final class TwitterDriver {
         ArrayList<TweetData> tweets = new ArrayList<TweetData>();
 
         // Used to format date to...below format.
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm-ss");
 
         TweetData newTweet;
         for(Status status : statuses){
