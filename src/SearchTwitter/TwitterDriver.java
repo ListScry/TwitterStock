@@ -193,7 +193,7 @@ public final class TwitterDriver {
             newTweet.User       =   status.getUser().getScreenName().toString();
             newTweet.Followers  =   "" + status.getUser().getFollowersCount();
             newTweet.Retweets   =   "" + status.getRetweetCount();
-            newTweet.TimeStamp  =   formatter.format(status.getCreatedAt());
+            newTweet.TimeStamp  =   Long.toString(status.getCreatedAt().getTime());
             // Mood goes here, sequentially
             newTweet.Keyword    =   curKeyword;
             newTweet.Text       =   status.getText().toString();

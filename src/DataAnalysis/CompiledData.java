@@ -12,29 +12,18 @@ import java.util.Date;
  * Created by Stefan Mellem on 3/3/14.
  */
 public class CompiledData {
-    private Date startDate;
-    private Date endDate;
-    private long numDays;
+    private long start, end;
+    private int numDays;
     private ArrayList<ArrayList<TweetData> > tweetBuckets;
     private ArrayList<ArrayList<YQLHistoricalData> > stockBuckets;
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
-    /* CONSTRUCTOR
-        start and end in format "yyyy-MM-dd"
-     */
-    public CompiledData(ArrayList<TweetData> tweets, ArrayList<YQLHistoricalData> stocks, String start, String end){
-        //format for start and end datestamps
-        try{
-            startDate = formatter.parse(start);
-            endDate = formatter.parse(end);
-        }
-        catch (ParseException pe) {
-            pe.printStackTrace();
-        }
-
+    public CompiledData(ArrayList<TweetData> tweets, ArrayList<YQLHistoricalData> stocks, long start, long end){
+        this.start=start;
+        this.end=end;
         //# buckets will be 2*numDays
-        numDays = (endDate.getTime() - startDate.getTime())/(1000*60*60*24);
+        numDays = (int)(end-start)/(1000*60*60*24);
         //initialize our buckets
         tweetBuckets = new ArrayList<ArrayList<TweetData> >(2*(int)numDays);
         stockBuckets = new ArrayList<ArrayList<YQLHistoricalData> >(2*(int)numDays);
@@ -61,7 +50,7 @@ public class CompiledData {
         long secsFromStart = -1;
         try{
             Date tsDate = formatter.parse(timestamp);
-            secsFromStart = (tsDate.getTime()-startDate.getTime())/1000;
+            secsFromStart = (tsDate.getTime()-start)/1000;
         }
         catch (ParseException pe) {
             pe.printStackTrace();
