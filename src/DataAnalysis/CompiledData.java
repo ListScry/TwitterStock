@@ -45,19 +45,42 @@ public class CompiledData {
         return null;
     }
 
-    // timestamp in format "yyyy-MM-dd:HH-mm-ss"
-    private int indexFromTimestamp(String timestamp){
-        long secsFromStart = -1;
-        try{
-            Date tsDate = formatter.parse(timestamp);
-            secsFromStart = (tsDate.getTime()-start)/1000;
+    /*
+     date in form "yyyy-MM-dd"
+     */
+    public long getMarketOpen(String date){
+        //append the hour, minute, and timezone
+        date+="::HH-mm; zz";
+        Date dt = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm");
+        try {
+            dt = formatter.parse(date);
         }
-        catch (ParseException pe) {
+        catch (ParseException pe){
             pe.printStackTrace();
             return -1;
         }
 
-        //fill in calcs
+        return -1;
+    }
+
+    /*
+     date in form "yyyy-MM-dd"
+     */
+    public long getMarketClose(String date){
+
+        return -1;
+    }
+
+    private int indexFromLong(long timestamp){
+        //is the timestamp in our time range?
+
+        //is the first bucket in trading hours or outside them?
+
+        //timestamp in days since epoch
+        int daystamp = (int)timestamp/(1000*60*60*24);
+
+
 
         return 0;
     }

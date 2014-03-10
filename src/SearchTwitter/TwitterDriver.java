@@ -188,6 +188,10 @@ public final class TwitterDriver {
         for(Status status : statuses){
             newTweet = new TweetData();
 
+            //System.out.println(status.getUser().getScreenName().toString());
+            //System.out.println(status.getCreatedAt());
+            //it appears that all times are PACIFIC
+
             // Prep with data
             newTweet.ID         =   "" + status.getId();
             newTweet.User       =   status.getUser().getScreenName().toString();
