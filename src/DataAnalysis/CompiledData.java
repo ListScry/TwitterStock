@@ -3,10 +3,13 @@ package DataAnalysis;
 import SearchTwitter.TweetData;
 import YQL.YQLHistoricalData;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Stefan Mellem on 3/3/14.
@@ -48,28 +51,41 @@ public class CompiledData {
     /*
      date in form "yyyy-MM-dd"
      */
-    public long getMarketOpen(String date){
+    public static long getMarketOpen(String date){
         //append the hour, minute, and timezone
-        date+="::HH-mm; zz";
+        TimeZone et = TimeZone.getTimeZone("America/New_York");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
+
+        date+="::09-30 "+et.getDisplayName();
         Date dt = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm");
         try {
             dt = formatter.parse(date);
+            return dt.getTime();
         }
         catch (ParseException pe){
             pe.printStackTrace();
             return -1;
         }
-
-        return -1;
     }
 
     /*
      date in form "yyyy-MM-dd"
      */
-    public long getMarketClose(String date){
+    public static long getMarketClose(String date){
+        //append the hour, minute, and timezone
+        TimeZone et = TimeZone.getTimeZone("America/New_York");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
 
-        return -1;
+        date+="::16-00 "+et.getDisplayName();
+        Date dt = new Date();
+        try {
+            dt = formatter.parse(date);
+            return dt.getTime();
+        }
+        catch (ParseException pe){
+            pe.printStackTrace();
+            return -1;
+        }
     }
 
     private int indexFromLong(long timestamp){
