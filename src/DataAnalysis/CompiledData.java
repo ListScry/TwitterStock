@@ -56,11 +56,15 @@ public class CompiledData {
         TimeZone et = TimeZone.getTimeZone("America/New_York");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
 
+        System.out.println("Timezone: " + et.getDisplayName());
         date+="::09-30 "+et.getDisplayName();
         Date dt = new Date();
         try {
             dt = formatter.parse(date);
-            return dt.getTime();
+            if (et.inDaylightTime(dt))
+                return dt.getTime()-et.getDSTSavings();
+            else
+                return dt.getTime();
         }
         catch (ParseException pe){
             pe.printStackTrace();
@@ -75,7 +79,8 @@ public class CompiledData {
         //append the hour, minute, and timezone
         TimeZone et = TimeZone.getTimeZone("America/New_York");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
-
+        System.out.print("Timezone: ");
+        System.out.println(et.getDisplayName());
         date+="::16-00 "+et.getDisplayName();
         Date dt = new Date();
         try {
