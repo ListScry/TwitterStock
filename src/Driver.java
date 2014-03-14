@@ -237,8 +237,6 @@ public class Driver {
     }
 
     public static void main(String[] args) {
-        System.out.println(CompiledData.getMarketOpen("1970-06-01"));
-
         // Gets tweets from Twitter
         runTwitter();
 
