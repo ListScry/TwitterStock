@@ -208,14 +208,11 @@ public class Driver {
     private static void initDB(){
         SQLiteConnection db = new SQLiteConnection(new File("./database"));
 
-        try {
-            db.open(true);
-
-            // Create first table
+        try { db.open(true); // Create first table
 
             String s3 = "INSERT INTO QUOTE";
 
-            System.out.println(st);
+            //System.out.println(st);
 
             String select = "SELECT * FROM Quote;";
             SQLiteStatement st2 = db.prepare(select);
@@ -231,8 +228,25 @@ public class Driver {
         }
 
     }
-    void initDB(File databaseFile) throws SQLiteException {
-        SQLiteConnection db = new SQLiteConnection(new File("./database"));
+
+    private static void store(SQLiteConnection db, TweetData td) 
+	throws SQLiteException {
+	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	SQLiteStatement st = db.prepare(q);
+	st.bind(1, td.ID);
+	st.bind(2, td.User);
+	st.bind(3, Integer.parseInt(td.Followers));
+	st.bind(4, td.getDate());
+	st.bind(5, td.Mood);
+	st.bind(6, td.Keyword);
+	st.bind(7, td.Text);
+	st.step();
+	st.dispose();
+    }
+
+    private static void initDB(File databaseFile) throws SQLiteException {
+        SQLiteConnection db = new SQLiteConnection(databaseFile);
+	db.open(true);
 	String s = "CREATE TABLE Quote ("
 	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
 	    + "Mood varchar(30), Keyword varchar(30), Volume int, Adj_close Decimal(4,2) );";
@@ -243,7 +257,7 @@ public class Driver {
 	    + "ID varchar(30), User varchar(30), Followers Bigint "
 	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
 	    + "Text varchar(140) );";
-	SQLiteStatement st = db.prepare(s);
+	st = db.prepare(s);
 	st.step();
 	st.dispose();
     }

@@ -18,4 +18,8 @@ public class TweetData {
     public String toString(){
         return ID+ " " + User + " "+Followers+" "+Retweets+" "+TimeStamp+" "+Mood+" "+Keyword+" "+Text+ " " + DELIM;
     }
+
+    public long getDate() {
+	return TimeStamp.hashCode();
+    }
 }
