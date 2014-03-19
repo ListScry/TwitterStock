@@ -249,12 +249,13 @@ public class Driver {
 	db.open(true);
 	String s = "CREATE TABLE Quote ("
 	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
-	    + "Mood varchar(30), Keyword varchar(30), Volume int, Adj_close Decimal(4,2) );";
+	    + "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
+	    + "Volume int, Adj_close Decimal(4,2) );";
 	SQLiteStatement st = db.prepare(s);
 	st.step();
 	st.dispose();
 	String t = "CREATE TABLE Tweets (" 
-	    + "ID varchar(30), User varchar(30), Followers Bigint "
+	    + "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
 	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
 	    + "Text varchar(140) );";
 	st = db.prepare(s);
