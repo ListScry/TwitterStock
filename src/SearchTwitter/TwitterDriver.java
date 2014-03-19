@@ -174,7 +174,7 @@ public final class TwitterDriver {
     }
 
     public static void setMood(TweetData tweet){
-        tweet.Mood = Float.toString(SentimentAnalyzer.findSentiment(tweet.Text));
+        tweet.Mood = SentimentAnalyzer.findSentiment(tweet.Text);
     }
 
     public static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
@@ -195,9 +195,9 @@ public final class TwitterDriver {
             // Prep with data
             newTweet.ID         =   "" + status.getId();
             newTweet.User       =   status.getUser().getScreenName().toString();
-            newTweet.Followers  =   "" + status.getUser().getFollowersCount();
-            newTweet.Retweets   =   "" + status.getRetweetCount();
-            newTweet.TimeStamp  =   Long.toString(status.getCreatedAt().getTime());
+            newTweet.Followers  =   status.getUser().getFollowersCount();
+            newTweet.Retweets   =   status.getRetweetCount();
+            newTweet.TimeStamp  =   status.getCreatedAt().getTime();
             // Mood goes here, sequentially
             newTweet.Keyword    =   curKeyword;
             newTweet.Text       =   status.getText().toString();

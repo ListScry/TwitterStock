@@ -100,16 +100,16 @@ public class Driver {
         curTweet.User = sc2.next();
 
         // FOLLOWERS
-        curTweet.Followers = sc2.next();
+        curTweet.Followers = Integer.parseInt(sc2.next());
 
         // RETWEETS
-        curTweet.Retweets = sc2.next();
+        curTweet.Retweets = Integer.parseInt(sc2.next());
 
         // TIMESTAMP
-        curTweet.TimeStamp = sc2.next();
+        curTweet.TimeStamp = Long.parseLong(sc2.next());
 
         // MOOD
-        curTweet.Mood = sc2.next();
+        curTweet.Mood = Float.parseFloat(sc2.next());
 
         // KEYWORD
         curTweet.Keyword = sc2.next();
@@ -144,22 +144,22 @@ public class Driver {
         curStock.Date = sc2.next();
 
         // OPEN
-        curStock.Open = sc2.next();
+        curStock.Open = Float.parseFloat(sc2.next());
 
         // HIGH
-        curStock.High = sc2.next();
+        curStock.High = Float.parseFloat(sc2.next());
 
         // LOW
-        curStock.Low = sc2.next();
+        curStock.Low = Float.parseFloat(sc2.next());
 
         // CLOSE
-        curStock.Close = sc2.next();
+        curStock.Close = Float.parseFloat(sc2.next());
 
         // VOLUME
-        curStock.Volume = sc2.next();
+        curStock.Volume = Long.parseLong(sc2.next());
 
         // ADJ_CLOSE
-        curStock.Adj_Close = sc2.next();
+        curStock.Adj_Close = Float.parseFloat(sc2.next());
 
         return curStock;
     }
@@ -235,8 +235,8 @@ public class Driver {
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
 	st.bind(2, td.User);
-	st.bind(3, Integer.parseInt(td.Followers));
-	st.bind(4, td.getDate());
+	st.bind(3, td.Followers);
+	st.bind(4, td.TimeStamp);
 	st.bind(5, td.Mood);
 	st.bind(6, td.Keyword);
 	st.bind(7, td.Text);
