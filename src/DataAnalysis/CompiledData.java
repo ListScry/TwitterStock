@@ -19,20 +19,41 @@ public class CompiledData {
     private int numDays;
     private ArrayList<ArrayList<TweetData> > tweetBuckets;
     private ArrayList<ArrayList<YQLHistoricalData> > stockBuckets;
+    private static final long MS_IN_DAY = 1000*60*60*24;
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
+    /*
+     start and end in milliseconds since epoch
+     start is floored to the beginning of its day
+     end is ceilinged to the end of its day
+     */
     public CompiledData(ArrayList<TweetData> tweets, ArrayList<YQLHistoricalData> stocks, long start, long end){
-        this.start=start;
-        this.end=end;
+        long start_floor = (start/MS_IN_DAY)*MS_IN_DAY; //floor to previous day beginning
+        long end_ceil = (1+((end-1)/MS_IN_DAY))*MS_IN_DAY; //ceil to next day beginning
+
+        //our first bin will be the market-hours bin on the start day
+        //our last bin will be the after-market bin on the end day
+        Date start_date = new Date(start_floor);
+        Date end_date = new Date(end_ceil);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        this.start = getMarketOpen(formatter.format(start_date));
+        this.end = getMarketOpen(formatter.format(end_date));
+
         //# buckets will be 2*numDays
-        numDays = (int)(end-start)/(1000*60*60*24);
+        numDays = (int)((this.end-this.start)/MS_IN_DAY);
         //initialize our buckets
-        tweetBuckets = new ArrayList<ArrayList<TweetData> >(2*(int)numDays);
-        stockBuckets = new ArrayList<ArrayList<YQLHistoricalData> >(2*(int)numDays);
+        tweetBuckets = new ArrayList<ArrayList<TweetData> >(2*numDays);
+        stockBuckets = new ArrayList<ArrayList<YQLHistoricalData> >(2*numDays);
 
         //loop through passed-in data and put into the appropriate buckets
         //check timezone information?
+        for (TweetData tweet : tweets){
+
+        }
+        for (YQLHistoricalData stock : stocks){
+
+        }
     }
 
     public float getMood(String timestamp){
@@ -51,7 +72,7 @@ public class CompiledData {
     /*
      date in form "yyyy-MM-dd"
      */
-    public static long getMarketOpen(String date){
+    private static long getMarketOpen(String date){
         //append the hour, minute, and timezone
         TimeZone et = TimeZone.getTimeZone("America/New_York");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
@@ -75,14 +96,14 @@ public class CompiledData {
     /*
      date in form "yyyy-MM-dd"
      */
-    public static long getMarketClose(String date){
+    private static long getMarketClose(String date){
         //append the hour, minute, and timezone
         TimeZone et = TimeZone.getTimeZone("America/New_York");
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm z");
         System.out.print("Timezone: ");
         System.out.println(et.getDisplayName());
         date+="::16-00 "+et.getDisplayName();
-        Date dt = new Date();
+        Date dt;
         try {
             dt = formatter.parse(date);
             return dt.getTime();
@@ -94,15 +115,13 @@ public class CompiledData {
     }
 
     private int indexFromLong(long timestamp){
-        //is the timestamp in our time range?
+        long diff_from_start = timestamp-start; //milliseconds after the beginning of our first bin
+        if (diff_from_start<0 || diff_from_start>end-start)
+            return -1; //before start time or after end
 
-        //is the first bucket in trading hours or outside them?
-
-        //timestamp in days since epoch
-        int daystamp = (int)timestamp/(1000*60*60*24);
-
-
-
-        return 0;
+        if (diff_from_start%MS_IN_DAY<(6*60+30)*60*1000)
+            return (int)(2*diff_from_start/MS_IN_DAY);
+        else
+            return (int)(2*diff_from_start/MS_IN_DAY+1);
     }
 }
