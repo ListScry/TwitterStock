@@ -29,6 +29,10 @@ public class YQLHistoricalData {
     }
 
     public String toString(){
-        return Symbol+Date+" "+Symbol+" "+getDate()+" "+High+" "+Low+" "+Open+" "+Close+" "+Volume+" "+Adj_Close;
+        return id() +" "+Symbol+" "+getDate()+" "+High+" "+Low+" "+Open+" "+Close+" "+Volume+" "+Adj_Close;
+    }
+
+    public String id() {
+	return Symbol + Date;
     }
 }

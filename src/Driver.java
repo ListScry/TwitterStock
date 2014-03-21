@@ -231,7 +231,7 @@ public class Driver {
 
     private static void store(SQLiteConnection db, TweetData td) 
 	throws SQLiteException {
-	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
 	st.bind(2, td.User);
@@ -244,13 +244,28 @@ public class Driver {
 	st.dispose();
     }
 
+    private static void store(SQLiteConnection db, YQLHistoricalData yd) 
+    	throws SQLiteException {
+	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	    SQLiteStatement st = db.prepare(q);
+	    st.bind(1, yd.id());
+	    st.bind(2, yd.getDate());
+	    st.bind(3, yd.Open);
+	    st.bind(4, yd.High);
+	    st.bind(5, yd.Low);
+	    st.bind(6, yd.Close);
+	    st.bind(7, yd.Volume);
+	    st.bind(8, yd.Adj_Close);
+    }
+
+
     private static void initDB(File databaseFile) throws SQLiteException {
         SQLiteConnection db = new SQLiteConnection(databaseFile);
 	db.open(true);
 	String s = "CREATE TABLE Quote ("
 	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
 	    + "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
-	    + "Volume int, Adj_close Decimal(4,2) );";
+	    + "Volume bigint, Adj_close Decimal(4,2) );";
 	SQLiteStatement st = db.prepare(s);
 	st.step();
 	st.dispose();
