@@ -14,6 +14,10 @@ import java.util.TimeZone;
 /**
  * Created by Stefan Mellem on 3/3/14.
  */
+
+//TODO: Scrap this and instead add a column in the database with a flag for "before,during,after" maket hours?
+//This would entail just shoving this categorization into the preprocessing step
+
 public class CompiledData {
     private long start, end;
     private int numDays;
