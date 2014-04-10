@@ -205,6 +205,7 @@ public class Driver {
 
     }
 
+    /* OLD -- See initDB(File) below */
     private static void initDB(){
         SQLiteConnection db = new SQLiteConnection(new File("./database"));
 
@@ -256,6 +257,8 @@ public class Driver {
 	    st.bind(6, yd.Close);
 	    st.bind(7, yd.Volume);
 	    st.bind(8, yd.Adj_Close);
+	    st.step();
+	    st.dispose();
     }
 
 
