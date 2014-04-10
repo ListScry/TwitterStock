@@ -114,6 +114,9 @@ public class Driver {
         // KEYWORD
         curTweet.Keyword = sc2.next();
 
+        // BINFLAG
+        curTweet.BinFlag = Integer.parseInt(sc2.next());
+
         String completeText = "";
         while ( sc2.hasNext() ) {
             String curWord = sc2.next();
@@ -241,7 +244,8 @@ public class Driver {
 	st.bind(4, td.TimeStamp);
 	st.bind(5, td.Mood);
 	st.bind(6, td.Keyword);
-	st.bind(7, td.Text);
+    st.bind(7, td.BinFlag);
+	st.bind(8, td.Text);
 	st.step();
 	st.dispose();
     }
@@ -277,7 +281,7 @@ public class Driver {
 	String t = "CREATE TABLE Tweets (" 
 	    + "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
 	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
-	    + "Text varchar(140) );";
+	    + "BinFlag int, Text varchar(140) );";
 	st = db.prepare(s);
 	st.step();
 	st.dispose();
