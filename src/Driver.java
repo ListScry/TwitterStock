@@ -232,6 +232,7 @@ public class Driver {
 
     private static void store(SQLiteConnection db, TweetData td) 
 	throws SQLiteException {
+	db.open(false);//open the database if it is not open
 	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
@@ -247,6 +248,7 @@ public class Driver {
 
     private static void store(SQLiteConnection db, YQLHistoricalData yd) 
     	throws SQLiteException {
+	    db.open(false);//open the database if it is not open
 	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 	    SQLiteStatement st = db.prepare(q);
 	    st.bind(1, yd.id());
@@ -262,7 +264,7 @@ public class Driver {
     }
 
 
-    private static void initDB(File databaseFile) throws SQLiteException {
+    private static SQLiteConnection initDB(File databaseFile) throws SQLiteException {
         SQLiteConnection db = new SQLiteConnection(databaseFile);
 	db.open(true);
 	String s = "CREATE TABLE Quote ("
@@ -279,6 +281,7 @@ public class Driver {
 	st = db.prepare(s);
 	st.step();
 	st.dispose();
+	return db;
     }
 
 
@@ -292,9 +295,19 @@ public class Driver {
         // Write data to file
         writeFiles();
 
+	try {
+	    SQLiteConnection db = initDB(new File("actualdata.sqlite"));
+	    for(TweetData tweet : tweets) {
+		store(db, tweet);
+	    }
+	    for(YQLHistoricalData stock : stocks) {
+		store(db, stock);
+	    }
+	    db.dispose();
+	} catch (SQLiteException ex) {
+	   ex.printStackTrace();
+	}
         //inputFiles();
-
-        //initDB();
 
     }
 
