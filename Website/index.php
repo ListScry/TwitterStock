@@ -1,6 +1,7 @@
 <body>
 
 
+
 <div style="text-align:left;">
 	<h1>Twitter / Stock Analysis</h1>
 	<div id="chartContainer" style="height: 400px; width: 900px;"></div>
@@ -15,7 +16,6 @@
 	</div>
 
 	<div style="width:800;">
-
 		<div style="width:400px;float:left;">
 			<h3>Tweet Bucket 1</h3>
 			<div id="tweetbucket1">
@@ -32,8 +32,8 @@
 </div>
 
 <script async src="http://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<script type="text/javascript" src="canvasjs.min.js"></script>
-<script type="text/javascript" src="jquery-2.1.0.min.js"></script> 
+<script type="text/javascript" src="/static/canvasjs.min.js"></script>
+<script type="text/javascript" src="/static/jquery-2.1.0.min.js"></script> 
 
 <script>
 
@@ -61,6 +61,22 @@ var obj = {
         			
 dataClicked(obj);
 fillTweets();
+
+
+
+
+/*
+	Example AJAX call
+	data = JSON returned from "getAllStockPrices.php"
+*/
+$.get( "ajax/getAllStockPrices.php", function( data ) {
+  	$( "body" ).html( data );
+  	alert( "Load was performed." );
+});
+
+
+
+
 
 function dataClicked(e){
 	date = e.dataPoint.x;
@@ -136,5 +152,7 @@ window.onload = function () {
 
 	
 </script>
+
+<?php include("query_results.php"); ?>
 
 </body>
