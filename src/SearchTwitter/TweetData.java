@@ -4,7 +4,7 @@ package SearchTwitter;
  * Created by frsandstone77 on 2/18/14.
  */
 public class TweetData {
-   public static final String DELIM = "%$#@%";
+    public static final String DELIM = "%$#@%";
 
     public String ID;
     public String User;
