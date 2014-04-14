@@ -205,7 +205,6 @@ public class Driver {
             stocks.add(curStock);
         }
 
-
     }
 
     /* OLD -- See initDB(File) below */
@@ -234,20 +233,20 @@ public class Driver {
     }
 
     private static void store(SQLiteConnection db, TweetData td) 
-	throws SQLiteException {
-	db.open(false);//open the database if it is not open
-	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-	SQLiteStatement st = db.prepare(q);
-	st.bind(1, td.ID);
-	st.bind(2, td.User);
-	st.bind(3, td.Followers);
-	st.bind(4, td.TimeStamp);
-	st.bind(5, td.Mood);
-	st.bind(6, td.Keyword);
-    st.bind(7, td.BinFlag);
-	st.bind(8, td.Text);
-	st.step();
-	st.dispose();
+	    throws SQLiteException {
+	    db.open(false);//open the database if it is not open
+	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	    SQLiteStatement st = db.prepare(q);
+	    st.bind(1, td.ID);
+	    st.bind(2, td.User);
+	    st.bind(3, td.Followers);
+	    st.bind(4, td.TimeStamp);
+	    st.bind(5, td.Mood);
+	    st.bind(6, td.Keyword);
+        st.bind(7, td.BinFlag);
+	    st.bind(8, td.Text);
+	    st.step();
+	    st.dispose();
     }
 
     private static void store(SQLiteConnection db, YQLHistoricalData yd) 
@@ -270,22 +269,22 @@ public class Driver {
 
     private static SQLiteConnection initDB(File databaseFile) throws SQLiteException {
         SQLiteConnection db = new SQLiteConnection(databaseFile);
-	db.open(true);
-	String s = "CREATE TABLE Quote ("
-	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
-	    + "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
-	    + "Volume bigint, Adj_close Decimal(4,2) );";
-	SQLiteStatement st = db.prepare(s);
-	st.step();
-	st.dispose();
-	String t = "CREATE TABLE Tweets (" 
-	    + "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
-	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
-	    + "BinFlag int, Text varchar(140) );";
-	st = db.prepare(s);
-	st.step();
-	st.dispose();
-	return db;
+    	db.open(true);
+    	String s = "CREATE TABLE Quote ("
+    	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
+    	    + "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), "
+    	    + "Volume bigint, Adj_close Decimal(4,2) );";
+    	SQLiteStatement st = db.prepare(s);
+    	st.step();
+    	st.dispose();
+    	String t = "CREATE TABLE Tweets ("
+    	    + "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
+    	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
+    	    + "BinFlag int, Text varchar(140) );";
+    	st = db.prepare(s);
+    	st.step();
+    	st.dispose();
+    	return db;
     }
 
 
@@ -302,10 +301,10 @@ public class Driver {
 	try {
 	    SQLiteConnection db = initDB(new File("actualdata.sqlite"));
 	    for(TweetData tweet : tweets) {
-		store(db, tweet);
+		    store(db, tweet);
 	    }
 	    for(YQLHistoricalData stock : stocks) {
-		store(db, stock);
+		    store(db, stock);
 	    }
 	    db.dispose();
 	} catch (SQLiteException ex) {
