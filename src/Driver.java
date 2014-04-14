@@ -268,24 +268,31 @@ public class Driver {
     }
 
 
-    private static SQLiteConnection initDB(File databaseFile) throws SQLiteException {
+    private static SQLiteConnection openDB(File databaseFile) throws SQLiteException {
         SQLiteConnection db = new SQLiteConnection(databaseFile);
-	db.open(true);
-	String s = "CREATE TABLE Quote ("
-	    + "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
-	    + "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
-	    + "Volume bigint, Adj_close Decimal(4,2) );";
-	SQLiteStatement st = db.prepare(s);
-	st.step();
-	st.dispose();
-	String t = "CREATE TABLE Tweets (" 
-	    + "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
-	    + "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
-	    + "BinFlag int, Text varchar(140) );";
-	st = db.prepare(s);
-	st.step();
-	st.dispose();
-	return db;
+	try {// Try opening it and not allow it to create
+	    db.open(false);
+	    return db;
+	} catch(SQLiteException ex) {
+	    //If that did not work, try opening it allowing a create
+	    // and make the tables
+	    db.open(true);
+	    String s = "CREATE TABLE Quote ("
+		+ "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
+		+ "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
+		+ "Volume bigint, Adj_close Decimal(4,2) );";
+	    SQLiteStatement st = db.prepare(s);
+	    st.step();
+	    st.dispose();
+	    String t = "CREATE TABLE Tweets (" 
+		+ "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
+		+ "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
+		+ "BinFlag int, Text varchar(140) );";
+	    st = db.prepare(s);
+	    st.step();
+	    st.dispose();
+	    return db;
+	}
     }
 
 
@@ -300,7 +307,7 @@ public class Driver {
         writeFiles();
 
 	try {
-	    SQLiteConnection db = initDB(new File("actualdata.sqlite"));
+	    SQLiteConnection db = openDB(new File("actualdata.sqlite"));
 	    for(TweetData tweet : tweets) {
 		store(db, tweet);
 	    }
