@@ -235,25 +235,30 @@ public class Driver {
 
     private static void store(SQLiteConnection db, TweetData td) 
 	throws SQLiteException {
-	db.open(false);//open the database if it is not open
-	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	if (! db.isOpen()) {
+	    db.open(false);//open the database if it is not open
+	}
+	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
 	st.bind(2, td.User);
 	st.bind(3, td.Followers);
-	st.bind(4, td.TimeStamp);
-	st.bind(5, td.Mood);
-	st.bind(6, td.Keyword);
-    st.bind(7, td.BinFlag);
-	st.bind(8, td.Text);
+	st.bind(4, td.Retweets);
+	st.bind(5, td.TimeStamp);
+	st.bind(6, td.Mood);
+	st.bind(7, td.Keyword);
+	st.bind(8, td.BinFlag);
+	st.bind(9, td.Text);
 	st.step();
 	st.dispose();
     }
 
     private static void store(SQLiteConnection db, YQLHistoricalData yd) 
     	throws SQLiteException {
-	    db.open(false);//open the database if it is not open
-	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	    if(!db.isOpen()) {
+		db.open(false);//open the database if it is not open
+	    }
+	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	    SQLiteStatement st = db.prepare(q);
 	    st.bind(1, yd.id());
 	    st.bind(2, yd.getDate());
@@ -286,9 +291,9 @@ public class Driver {
 	    st.dispose();
 	    String t = "CREATE TABLE Tweets (" 
 		+ "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
-		+ "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
+		+ "Timestamp Bigint, Mood varchar(30), Keyword varchar(30), "
 		+ "BinFlag int, Text varchar(140) );";
-	    st = db.prepare(s);
+	    st = db.prepare(t);
 	    st.step();
 	    st.dispose();
 	    return db;
@@ -298,7 +303,7 @@ public class Driver {
 
     public static void main(String[] args) {
         // Gets tweets from Twitter
-        runTwitter();
+	runTwitter();
 
         // Gets stocks form Yahoo
         runStocks();
@@ -308,6 +313,7 @@ public class Driver {
 
 	try {
 	    SQLiteConnection db = openDB(new File("actualdata.sqlite"));
+	    System.out.println("Successfully opened created both tables.");
 	    for(TweetData tweet : tweets) {
 		store(db, tweet);
 	    }
