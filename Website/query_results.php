@@ -1,12 +1,5 @@
 <?php
 
-/*
-		1) Query for tweets & Stock Data on a specific day
-		2) Format data in JSON object
-		3) Return data
-*/
-
-
 try 
 {
   //create or open the database
@@ -25,5 +18,13 @@ catch(Exception $e)
 {
   die($error);
 }
+
+// Average mood values --> sent at first load
+// binning and retrieving
+// 3 bins --> before, during, after (market hours)
+//			  before & after of adjacent days are the same
+
+// Good way of charting both twitter and stock data
+//			-- 2 charts for now
 
 ?>
