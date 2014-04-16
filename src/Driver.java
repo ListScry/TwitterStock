@@ -261,13 +261,15 @@ public class Driver {
 	    String q = "INSERT INTO Quote VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	    SQLiteStatement st = db.prepare(q);
 	    st.bind(1, yd.id());
-	    st.bind(2, yd.getDate());
-	    st.bind(3, yd.Open);
-	    st.bind(4, yd.High);
-	    st.bind(5, yd.Low);
-	    st.bind(6, yd.Close);
-	    st.bind(7, yd.Volume);
-	    st.bind(8, yd.Adj_Close);
+	    st.bind(2, yd.Symbol);
+	    st.bind(3, yd.getDate());
+	    st.bind(4, yd.Open);
+	    st.bind(5, yd.High);
+	    st.bind(6, yd.Low);
+	    st.bind(7, yd.Close);
+	    st.bind(8, yd.Volume);
+	    st.bind(9, yd.Adj_Close);
+	    //System.out.println("Quote statement: " + st);
 	    st.step();
 	    st.dispose();
     }
@@ -311,8 +313,13 @@ public class Driver {
         // Write data to file
         writeFiles();
 
+	System.out.println("After writing files.");
+
+	//inputFiles();
+
 	try {
 	    SQLiteConnection db = openDB(new File("actualdata.sqlite"));
+	    System.out.println("After opening database.");
 	    System.out.println("Successfully opened created both tables.");
 	    for(TweetData tweet : tweets) {
 		store(db, tweet);
