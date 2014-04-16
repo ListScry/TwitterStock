@@ -16,7 +16,7 @@ public class YQLHistoricalData {
     public long Volume;
     public float Adj_Close;
 
-    public long getDate(){
+    public long getDateAsLong(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try{
             return formatter.parse(Date).getTime();
@@ -29,7 +29,7 @@ public class YQLHistoricalData {
     }
 
     public String toString(){
-        return id() +" "+Symbol+" "+getDate()+" "+High+" "+Low+" "+Open+" "+Close+" "+Volume+" "+Adj_Close;
+        return id() +" "+Symbol+" "+Date+" "+High+" "+Low+" "+Open+" "+Close+" "+Volume+" "+Adj_Close;
     }
 
     public String id() {
