@@ -258,7 +258,7 @@ public class Driver {
 	    if(!db.isOpen()) {
 		db.open(false);//open the database if it is not open
 	    }
-	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	    String q = "INSERT INTO Quote VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	    SQLiteStatement st = db.prepare(q);
 	    st.bind(1, yd.id());
 	    st.bind(2, yd.getDate());
