@@ -272,8 +272,10 @@ public class Driver {
         SQLiteConnection db = new SQLiteConnection(databaseFile);
 	try {// Try opening it and not allow it to create
 	    db.open(false);
+	    System.out.println("Database already existed.");
 	    return db;
 	} catch(SQLiteException ex) {
+	    System.out.println("Database did not already exist.");
 	    //If that did not work, try opening it allowing a create
 	    // and make the tables
 	    db.open(true);
