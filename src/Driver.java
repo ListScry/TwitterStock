@@ -1,4 +1,3 @@
-import DataAnalysis.CompiledData;
 import SearchTwitter.TweetData;
 import YQL.YQLHistoricalData;
 import YQL.YQLHistoricalDataParser;
@@ -107,6 +106,9 @@ public class Driver {
 
         // TIMESTAMP
         curTweet.TimeStamp = Long.parseLong(sc2.next());
+
+        // DATE
+        curTweet.Date = sc2.next();
 
         // MOOD
         curTweet.Mood = Float.parseFloat(sc2.next());
@@ -235,34 +237,41 @@ public class Driver {
 
     private static void store(SQLiteConnection db, TweetData td) 
 	throws SQLiteException {
-	db.open(false);//open the database if it is not open
-	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	if (! db.isOpen()) {
+	    db.open(false);//open the database if it is not open
+	}
+	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
 	st.bind(2, td.User);
 	st.bind(3, td.Followers);
-	st.bind(4, td.TimeStamp);
-	st.bind(5, td.Mood);
-	st.bind(6, td.Keyword);
-    st.bind(7, td.BinFlag);
-	st.bind(8, td.Text);
+	st.bind(4, td.Retweets);
+	st.bind(5, td.TimeStamp);
+    st.bind(6, td.Date);
+	st.bind(7, td.Mood);
+	st.bind(8, td.Keyword);
+	st.bind(9, td.BinFlag);
+	st.bind(10, td.Text);
 	st.step();
 	st.dispose();
     }
 
     private static void store(SQLiteConnection db, YQLHistoricalData yd) 
     	throws SQLiteException {
-	    db.open(false);//open the database if it is not open
-	    String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+	    if(!db.isOpen()) {
+		db.open(false);//open the database if it is not open
+	    }
+	    String q = "INSERT INTO Quote VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	    SQLiteStatement st = db.prepare(q);
 	    st.bind(1, yd.id());
-	    st.bind(2, yd.getDate());
-	    st.bind(3, yd.Open);
-	    st.bind(4, yd.High);
-	    st.bind(5, yd.Low);
-	    st.bind(6, yd.Close);
-	    st.bind(7, yd.Volume);
-	    st.bind(8, yd.Adj_Close);
+        st.bind(2, yd.Symbol);
+	    st.bind(3, yd.Date);
+	    st.bind(4, yd.Open);
+	    st.bind(5, yd.High);
+	    st.bind(6, yd.Low);
+	    st.bind(7, yd.Close);
+	    st.bind(8, yd.Volume);
+	    st.bind(9, yd.Adj_Close);
 	    st.step();
 	    st.dispose();
     }
@@ -280,7 +289,7 @@ public class Driver {
 	    // and make the tables
 	    db.open(true);
 	    String s = "CREATE TABLE Quote ("
-		+ "ID varchar(30), Ticker varchar(5), Timestamp BIGINT, "
+		+ "ID varchar(30), Ticker varchar(5), Date varchar(10), "
 		+ "Open Decimal(4,2), High Decimal(4,2), Low Decimal(4,2), Close Decimal(4,2), " 
 		+ "Volume bigint, Adj_close Decimal(4,2) );";
 	    SQLiteStatement st = db.prepare(s);
@@ -288,9 +297,9 @@ public class Driver {
 	    st.dispose();
 	    String t = "CREATE TABLE Tweets (" 
 		+ "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
-		+ "Timestamp Bigint, Mood varchar(30), Keyword varchar(30) "
+		+ "Timestamp Bigint, Date varchar(10), Mood varchar(30), Keyword varchar(30), "
 		+ "BinFlag int, Text varchar(140) );";
-	    st = db.prepare(s);
+	    st = db.prepare(t);
 	    st.step();
 	    st.dispose();
 	    return db;
@@ -300,7 +309,7 @@ public class Driver {
 
     public static void main(String[] args) {
         // Gets tweets from Twitter
-        runTwitter();
+	    runTwitter();
 
         // Gets stocks form Yahoo
         runStocks();
@@ -308,8 +317,14 @@ public class Driver {
         // Write data to file
         writeFiles();
 
+        System.out.println("Files written.");
+        // Input data from files
+        //inputFiles();
+
 	try {
 	    SQLiteConnection db = openDB(new File("actualdata.sqlite"));
+	    System.out.println("After opening database.");
+	    System.out.println("Successfully opened created both tables.");
 	    for(TweetData tweet : tweets) {
 		store(db, tweet);
 	    }

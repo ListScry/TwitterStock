@@ -182,7 +182,7 @@ public final class TwitterDriver {
         ArrayList<TweetData> tweets = new ArrayList<TweetData>();
 
         // Used to format date to...below format.
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd::HH-mm-ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 
         TweetData newTweet;
         for(Status status : statuses){
@@ -198,6 +198,7 @@ public final class TwitterDriver {
             newTweet.Followers  =   status.getUser().getFollowersCount();
             newTweet.Retweets   =   status.getRetweetCount();
             newTweet.TimeStamp  =   status.getCreatedAt().getTime();
+            newTweet.Date       =   formatter.format(status.getCreatedAt());
             // Mood goes here, sequentially
             newTweet.Keyword    =   curKeyword;
             newTweet.BinFlag    =   TweetBinner.getTweetBinFlag(newTweet.TimeStamp);

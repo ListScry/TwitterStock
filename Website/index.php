@@ -58,25 +58,20 @@ var obj = {
 			x: new Date(2014, 02, 1)
 		}
 	};
+	
+var json = {};
         			
 dataClicked(obj);
 fillTweets();
 
-
-
-
 /*
 	Example AJAX call
-	data = JSON returned from "getAllStockPrices.php"
+	data = JSON returned from "getDataForDays.php"
 */
-$.get( "ajax/getAllStockPrices.php", function( data ) {
-  	$( "body" ).html( data );
-  	alert( "Load was performed." );
+$.get( "ajax/getDataForDay.php", function( data ) {
+	json = data;
+	console.log(json);
 });
-
-
-
-
 
 function dataClicked(e){
 	date = e.dataPoint.x;
@@ -96,6 +91,9 @@ function dataClicked(e){
 }
 
 function fillTweets(){
+	
+	console.log([1,2,3].size())
+	
 	allTweets = []
 
 	$('#tweetbucket1').text('')
@@ -111,8 +109,6 @@ function fillTweets(){
 			$('#tweetbucket1').append(tweet2 + delim)
 			$('#tweetbucket2').append(tweet1 + delim)
 		}
-		
-
 	}
 }
 
@@ -153,6 +149,5 @@ window.onload = function () {
 	
 </script>
 
-<?php include("query_results.php"); ?>
 
 </body>
