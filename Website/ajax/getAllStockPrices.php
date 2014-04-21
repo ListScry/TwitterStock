@@ -1,4 +1,11 @@
 <?php
+    ini_set('display_errors', '1');
+	error_reporting(E_ALL);
+?>
+
+
+
+<?php
 
 /*
 		1) Query for all daily stock prices (not detailed - Open/Closed)
@@ -6,20 +13,23 @@
 		3) Return JSON
 */
 
+header("Content-type: text/json");
 
 try 
 {
-  //create or open the database
-  $db = new SQLiteDatabase('database', 0666, $error);
-  
-  $result = $db->prepare('SELECT * FROM data');
-  $result->execute(array($inNodeID));
-  $data = $result->fetchAll();
+  // Open the database
+  $db = new PDO('sqlite:actualdata.sqlite');
+  $sql = "SELECT Date,Open,Close FROM Quote";
 
-  foreach($data as $row){
-  	
-  }
-	  
+  // Perform the query
+  $statement = $db->prepare($sql);
+  $statement->execute();
+  $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+
+  // Format & output results
+  $json=json_encode($results);
+  echo $json;
+
 }
 catch(Exception $e) 
 {
