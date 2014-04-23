@@ -15,11 +15,15 @@
 
 header("Content-type: text/json");
 
+// Parameters
+$startDate = $_GET['startDate'];
+$endDate = $_GET['startDate'];
+
 try 
 {
   // Open the database
   $db = new PDO('sqlite:actualdata.sqlite');
-  $sql = "SELECT Date,Open,Close FROM Quote";
+  $sql = "SELECT Date,Open,Close FROM Quote WHERE (Date>='$startDate' AND Date<='$endDate')" ;
 
   // Perform the query
   $statement = $db->prepare($sql);

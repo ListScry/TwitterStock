@@ -7,19 +7,33 @@
 		4) Return JSON
 */
 
+// Parameters
+$startDate = $_GET['startDate'];
+$endDate = $_GET['endDate'];
+
 try 
 {
-  //create or open the database
-  $db = new SQLiteDatabase('database', 0666, $error);
-  
-  $result = $db->prepare('SELECT * FROM data');
-  $result->execute(array($inNodeID));
-  $data = $result->fetchAll();
+  // Open the database
+  $db = new PDO('sqlite:actualdata.sqlite');
+  $sql = "SELECT Mood,Date FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate')" ;
 
-  foreach($data as $row){
-  	
+  // Perform the query
+  $statement = $db->prepare($sql);
+  $statement->execute();
+  $results=$statement->fetchAll(PDO::FETCH_ASSOC);
+
+  // Currently averages Mood from ALL days in range; switch to getting an
+  // average for each day
+  $total = 0;
+  $count = 0;
+  foreach($results as $row){
+    $total = $total+$row["Mood"];
+    $count++
   }
-	  
+
+  // Format & output results
+  $json=json_encode($total/$count);
+  echo $json;
 }
 catch(Exception $e) 
 {
@@ -27,3 +41,4 @@ catch(Exception $e)
 }
 
 ?>
+    
