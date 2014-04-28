@@ -22,17 +22,29 @@ try
   $statement->execute();
   $results=$statement->fetchAll(PDO::FETCH_ASSOC);
 
-  // Currently averages Mood from ALL days in range; switch to getting an
-  // average for each day
-  $total = 0;
-  $count = 0;
+  // Sum the Mood values for each Date in the range
+  // TODO: switch to categorizing by bin rather than full days
+  $totals = array();
+  $counts = array();
   foreach($results as $row){
-    $total = $total+$row["Mood"];
-    $count++
+    if (!array_key_exists($row["Date"],$totals)){
+      $totals[$row["Date"]]=$row["Mood"];
+      $counts[$row["Date"]]=1;
+    }
+    else {
+      $totals[$row["Date"]]+=$row["Mood"];
+      $counts[$row["Date"]]++;
+    }
+  }
+
+  // Calculate the average Mood for each Date in the range
+  $averages = array();
+  foreach($totals as $date => $val){
+    $averages[$date]=$val/$counts[$date];
   }
 
   // Format & output results
-  $json=json_encode($total/$count);
+  $json=json_encode($averages);
   echo $json;
 }
 catch(Exception $e) 
