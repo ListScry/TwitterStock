@@ -17,7 +17,7 @@ public class TweetData {
     public String Date;
     public float Mood;
     public String Keyword;
-    public int BinFlag; //-1 is before market hours, 0 is during, 1 is after
+    public String DateBin; //<DATE>::0 is before market hours, <DATE>::1 is during market hours
     public String Text;
 
     private String getDateAsString(){
@@ -26,6 +26,6 @@ public class TweetData {
     }
 
     public String toString(){
-        return ID+ " " + User + " "+Followers+" "+Retweets+" "+TimeStamp+" "+Date+" "+Mood+" "+Keyword+" "+BinFlag+" "+Text+ " " + DELIM;
+        return ID+ " " + User + " "+Followers+" "+Retweets+" "+TimeStamp+" "+Date+" "+Mood+" "+Keyword+" "+DateBin+" "+Text+ " " + DELIM;
     }
 }

@@ -70,4 +70,14 @@ public class TweetBinner {
         else
             return 1;
     }
+
+    public static String getDateBin(long timestamp){
+        String day = dateNoTime.format(new Date(timestamp));
+        if (timestamp < getMarketOpen(day))
+            return dateNoTime.format(new Date(timestamp))+"::0";
+        else if (timestamp < getMarketClose(day))
+            return dateNoTime.format(new Date(timestamp))+"::1";
+        else
+            return dateNoTime.format(new Date(timestamp+MS_IN_DAY))+"::0";
+    }
 }

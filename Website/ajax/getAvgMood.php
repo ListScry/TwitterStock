@@ -15,32 +15,31 @@ try
 {
   // Open the database
   $db = new PDO('sqlite:actualdata.sqlite');
-  $sql = "SELECT Mood,Date FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate')" ;
+  $sql = "SELECT Mood,DateBin FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate')" ;
 
   // Perform the query
   $statement = $db->prepare($sql);
   $statement->execute();
   $results=$statement->fetchAll(PDO::FETCH_ASSOC);
 
-  // Sum the Mood values for each Date in the range
-  // TODO: switch to categorizing by bin rather than full days
+  // Sum the Mood values for each DateBin in the range
   $totals = array();
   $counts = array();
   foreach($results as $row){
-    if (!array_key_exists($row["Date"],$totals)){
-      $totals[$row["Date"]]=$row["Mood"];
-      $counts[$row["Date"]]=1;
+    if (!array_key_exists($row["DateBin"],$totals)){
+      $totals[$row["DateBin"]]=$row["Mood"];
+      $counts[$row["DateBin"]]=1;
     }
     else {
-      $totals[$row["Date"]]+=$row["Mood"];
-      $counts[$row["Date"]]++;
+      $totals[$row["DateBin"]]+=$row["Mood"];
+      $counts[$row["DateBin"]]++;
     }
   }
 
-  // Calculate the average Mood for each Date in the range
+  // Calculate the average Mood for each DateBin in the range
   $averages = array();
-  foreach($totals as $date => $val){
-    $averages[$date]=$val/$counts[$date];
+  foreach($totals as $datebin => $val){
+    $averages[$datebin]=$val/$counts[$datebin];
   }
 
   // Format & output results

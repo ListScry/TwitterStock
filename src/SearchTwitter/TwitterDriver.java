@@ -201,7 +201,7 @@ public final class TwitterDriver {
             newTweet.Date       =   formatter.format(status.getCreatedAt());
             // Mood goes here, sequentially
             newTweet.Keyword    =   curKeyword;
-            newTweet.BinFlag    =   TweetBinner.getTweetBinFlag(newTweet.TimeStamp);
+            newTweet.DateBin    =   TweetBinner.getDateBin(newTweet.TimeStamp);
             newTweet.Text       =   status.getText().toString();
 
             // Calculate and set Mood
