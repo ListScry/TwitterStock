@@ -47,11 +47,14 @@ public final class TwitterDriver {
 
             // Limit the locale to only English
             query.locale("en");
-
             //query.resultType("popular");
+
+            System.out.println("Querying up to id: " + query.getMaxId());
 
             // Set up result
             QueryResult result = twitter.search(query);
+
+            System.out.println("Received " + result.getCount() + " tweets.");
             return result;
 
         } catch (TwitterException te) {
@@ -68,9 +71,10 @@ public final class TwitterDriver {
 
         long earliestID = result.getTweets().get(0).getId();
         for( Status status : result.getTweets() ){
-            if( status.getId() < earliestID )
+            if( status.getId() < earliestID ){
                 earliestID = status.getId();
-
+                System.out.println(status.getCreatedAt());
+            }
         }
         return earliestID;
     }
@@ -131,7 +135,7 @@ public final class TwitterDriver {
 
     public static ArrayList<Status> queryKeyword(String keyword, Date date){
 
-        int totalTweets = 200;
+        int totalTweets = 500;
         int resultsPerQuery = 100;
         int numQueries = totalTweets / resultsPerQuery;
 
@@ -141,8 +145,8 @@ public final class TwitterDriver {
         ArrayList<Status> allStatuses = new ArrayList<Status>();
 
         // ------------- Do date stuff
-        Date startDate = addDay(date,-1);
-        Date endDate = date;
+        Date startDate = addDay(date,-7); //start 1 week prior to date
+        Date endDate = date; //end at passed date (default today in Driver.java)
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String startDate_str = formatter.format(startDate);

@@ -25,7 +25,7 @@ public class SentimentAnalyzer {
         if (line != null && line.length() > 0) {
             Annotation annotation = pipeline.process(line);
 
-            System.out.println(line);
+            //System.out.println(line);
             for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
                 Tree tree = sentence.get(SentimentCoreAnnotations.AnnotatedTree.class);
 

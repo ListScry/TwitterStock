@@ -61,7 +61,7 @@ public class Driver {
 
         // Setup
         Date today = Calendar.getInstance().getTime();
-        String keyword = "\"AAPL\"";
+        String keyword = "\"$AAPL\"";
 
         // Do Query
         ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, today);
