@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.PrintStream;
 import com.almworks.sqlite4java.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import SearchTwitter.*;
@@ -27,6 +28,9 @@ public class Driver {
 
     static ArrayList<TweetData> tweets;
     static ArrayList<YQLHistoricalData> stocks;
+
+    private static final long MS_IN_DAY = 1000*60*60*24;
+    private static SimpleDateFormat dateNoTime = new SimpleDateFormat("yyyy-MM-dd");
 
     private static void writeFiles(){
         try {
@@ -56,11 +60,11 @@ public class Driver {
         TwitterDriver.setUpTwitter();
 
         // Setup
-        Date date = Calendar.getInstance().getTime();
+        Date today = Calendar.getInstance().getTime();
         String keyword = "\"AAPL\"";
 
         // Do Query
-        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, date);
+        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, today);
         tweets = TwitterDriver.convertStatusToTweet(statuses);
 
         // Do Something With Tweets
@@ -69,9 +73,11 @@ public class Driver {
     }
 
     private static void runStocks(){
-
+        // Initialization
         YQLQueryClient.init();
         YQLHistoricalDataParser.init();
+
+        Date today = Calendar.getInstance().getTime();
 
         //Example of query
         /*
@@ -79,9 +85,9 @@ public class Driver {
                 " (\"MSFT\",\"GOOG\", \"AAPL\") and startDate = \"2014-01-01\" and endDate = \"2014-02-17\"");
         */
 
-        List<String> symbols = Arrays.asList("MSFT", "GOOG", "AAPL");
+        List<String> symbols = Arrays.asList("AAPL", "MSFT", "GOOG");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
-                "2014-01-01","2014-02-17"));
+                dateNoTime.format(today), dateNoTime.format(new Date(today.getTime()-14*MS_IN_DAY))));
 
         stocks = YQLHistoricalDataParser.parse(result);
 
