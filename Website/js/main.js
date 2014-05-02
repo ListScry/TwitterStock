@@ -44,3 +44,7 @@ $( "#datepicker" ).datepicker({
 // --- UI Initialization ---
 dataClicked(obj);
 fillTweets();
+
+getAllStockPrices();
+getAvgMood();
+getTweetsForDateBin();

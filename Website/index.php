@@ -93,7 +93,7 @@
 
 
 <!-- Our Custom Libraries / JS !-->
-<script type="text/javascript" src="./js/ajax.js"></script>
+<script type="text/javascript" src="./js/ajax_lib.js"></script>
 <script type="text/javascript" src="./js/ui.js"></script>
 <script type="text/javascript" src="./js/main.js"></script>
 
