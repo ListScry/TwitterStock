@@ -8,13 +8,14 @@
 */
 
 // Parameters
+$symbol = $_GET['symbol'];
 $dateBin = $_GET['dateBin'];
 
 try 
 {
   // Open the database
   $db = new PDO('sqlite:actualdata.sqlite');
-  $sql = "SELECT * FROM Tweets WHERE (DateBin=='$dateBin')" ;
+  $sql = "SELECT * FROM Tweets WHERE (DateBin=='$dateBin' AND Keyword=='$symbol')" ;
 
   // Perform the query
   $statement = $db->prepare($sql);

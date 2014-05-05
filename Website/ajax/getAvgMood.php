@@ -8,6 +8,7 @@
 */
 
 // Parameters
+$symbol = $_GET['symbol'];
 $startDate = $_GET['startDate'];
 $endDate = $_GET['endDate'];
 
@@ -15,7 +16,7 @@ try
 {
   // Open the database
   $db = new PDO('sqlite:actualdata.sqlite');
-  $sql = "SELECT Mood,DateBin FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate')" ;
+  $sql = "SELECT Mood,DateBin FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate' AND Keyword=='$symbol')" ;
 
   // Perform the query
   $statement = $db->prepare($sql);
