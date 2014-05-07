@@ -49,7 +49,7 @@ public final class TwitterDriver {
             query.locale("en");
             //query.resultType("popular");
 
-            System.out.println("Querying up to id: " + query.getMaxId());
+            System.out.println("Querying from id " + query.getSinceId() + " up to id: " + query.getMaxId());
 
             // Set up result
             QueryResult result = twitter.search(query);
@@ -135,7 +135,7 @@ public final class TwitterDriver {
 
     public static ArrayList<Status> queryKeyword(String keyword, Date date){
 
-        int totalTweets = 500;
+        int totalTweets = 15000; // max 180 queries per 15 minutes
         int resultsPerQuery = 100;
         int numQueries = totalTweets / resultsPerQuery;
 
@@ -160,8 +160,10 @@ public final class TwitterDriver {
         String queryString = keyword + startDate_str + endDate_str;
         System.out.println(queryString);
         long lastID = -1;
+        long previousLastID;
         for(int x = 0; x < numQueries; x ++){
             result = performQuery(queryString, lastID);
+            previousLastID = lastID;
             lastID = oldestResult(result);
             //System.out.println("-------" + (x * resultsPerQuery) + "-------");
 
@@ -170,6 +172,9 @@ public final class TwitterDriver {
                 // TODO: Skip if this tweet is outside the range.  Twitter API bug
                 allStatuses.add(status);
             }
+
+            if (lastID==previousLastID)
+                break;
         }
 
 

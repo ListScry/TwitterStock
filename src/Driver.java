@@ -64,12 +64,13 @@ public class Driver {
         String keyword = "\"$AAPL\"";
 
         // Do Query
-        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, today);
-        tweets = TwitterDriver.convertStatusToTweet(statuses);
+        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-3*MS_IN_DAY));
 
-        // Do Something With Tweets
+        // How many tweets did we get?
         System.out.println("Total Tweets:" + tweets.size());
 
+        // Convert from Twitter's Status object to our Tweet data structure
+        tweets = TwitterDriver.convertStatusToTweet(statuses);
     }
 
     private static void runStocks(){
@@ -85,9 +86,9 @@ public class Driver {
                 " (\"MSFT\",\"GOOG\", \"AAPL\") and startDate = \"2014-01-01\" and endDate = \"2014-02-17\"");
         */
 
-        List<String> symbols = Arrays.asList("AAPL", "MSFT", "GOOG");
+        List<String> symbols = Arrays.asList("AAPL");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
-                dateNoTime.format(today), dateNoTime.format(new Date(today.getTime()-14*MS_IN_DAY))));
+                dateNoTime.format(today), dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY))));
 
         stocks = YQLHistoricalDataParser.parse(result);
 
