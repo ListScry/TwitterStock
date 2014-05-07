@@ -13,7 +13,8 @@
 
 // -------------------------------------------------
 //	All Stock Prices
-//  Example Request URL: ??
+//Example Request URL:
+// ajax/getAllStockPrices.php?symbol=AAPL&startDate=2014-04-28&endDate=2014-05-02 
 // -------------------------------------------------
 function getAllStockPrices(symbol, startDate, endDate){
 	$.get( "ajax/getAllStockPrices.php?symbol="+symbol+"&startDate="+startDate+"&endDate="+endDate, function( data ) {
@@ -29,7 +30,8 @@ function getAllStockPrices_Callback(data){
 
 // -------------------------------------------------
 //	Average Mood
-//  Example Request URL: ??
+//Example Request URL: 
+// ajax/getAvgMood.php?symbol=AAPL&startDate=2014-04-28&endDate=2014-05-02 
 // -------------------------------------------------
 function getAvgMood(symbol, startDate, endDate){
 	$.get( "ajax/getAvgMood.php?symbol="+symbol+"&startDate="+startDate+"&endDate="+endDate, function( data ) {
@@ -45,7 +47,8 @@ function getAvgMood_Callback(data){
 
 // -------------------------------------------------
 //	Tweets From A Bin
-//  Example Request URL: ??
+//Example Request URL: ??
+// ajax/getTweetsForDateBin.php?symbol=AAPL&dateBin=2014-04-29::1
 // -------------------------------------------------
 function getTweetsForDateBin(symbol, dateBin){
 	$.get( "ajax/getTweetsForDateBin.php?symbol="+symbol+"&dateBin="+dateBin, function( data ) {
