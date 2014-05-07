@@ -88,7 +88,7 @@ public class Driver {
 
         List<String> symbols = Arrays.asList("AAPL");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
-                dateNoTime.format(today), dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY))));
+                dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)), dateNoTime.format(new Date(today.getTime()-3*MS_IN_DAY))));
 
         stocks = YQLHistoricalDataParser.parse(result);
 
