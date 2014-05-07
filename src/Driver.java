@@ -61,7 +61,7 @@ public class Driver {
 
         // Setup
         Date today = Calendar.getInstance().getTime();
-        String keyword = "\"$AAPL\"";
+        String keyword = "\"GOOG\"";
 
         // Do Query
         ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-3*MS_IN_DAY));
@@ -86,7 +86,7 @@ public class Driver {
                 " (\"MSFT\",\"GOOG\", \"AAPL\") and startDate = \"2014-01-01\" and endDate = \"2014-02-17\"");
         */
 
-        List<String> symbols = Arrays.asList("AAPL");
+        List<String> symbols = Arrays.asList("GOOG");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
                 dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)), dateNoTime.format(new Date(today.getTime()-3*MS_IN_DAY))));
 
