@@ -67,7 +67,7 @@ public class Driver {
         ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-3*MS_IN_DAY));
 
         // How many tweets did we get?
-        System.out.println("Total Tweets:" + tweets.size());
+        System.out.println("Total Tweets:" + statuses.size());
 
         // Convert from Twitter's Status object to our Tweet data structure
         tweets = TwitterDriver.convertStatusToTweet(statuses);
