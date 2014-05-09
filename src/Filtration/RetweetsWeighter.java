@@ -24,16 +24,16 @@ public class RetweetsWeighter extends Weighter {
 
             switch (type){
                 case LINEAR:
-                    tweet.Mood*=tweet.Retweets;
+                    tweet.Weight*=tweet.Retweets;
                     break;
                 case SQRT:
-                    tweet.Mood*=Math.sqrt(tweet.Retweets);
+                    tweet.Weight*=Math.sqrt(tweet.Retweets);
                     break;
                 case LOG:
-                    tweet.Mood*=Math.log(tweet.Retweets);
+                    tweet.Weight*=Math.log(tweet.Retweets);
                     break;
                 case EXPASYMP:
-                    tweet.Mood*=1-1.0/tweet.Retweets;
+                    tweet.Weight*=1-1.0/(1+tweet.Retweets);
                     break;
                 default:
                     System.err.println("[ERROR]: invalid weighting type; no weighting performed");

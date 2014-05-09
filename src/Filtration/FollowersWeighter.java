@@ -24,16 +24,16 @@ public class FollowersWeighter extends Weighter {
 
             switch (type){
                 case LINEAR:
-                    tweet.Mood*=tweet.Followers;
+                    tweet.Weight*=tweet.Followers;
                     break;
                 case SQRT:
-                    tweet.Mood*=Math.sqrt(tweet.Followers);
+                    tweet.Weight*=Math.sqrt(tweet.Followers);
                     break;
                 case LOG:
-                    tweet.Mood*=Math.log(tweet.Followers);
+                    tweet.Weight*=Math.log(tweet.Followers);
                     break;
                 case EXPASYMP:
-                    tweet.Mood*=1-1.0/tweet.Followers;
+                    tweet.Weight*=1-1.0/(1+tweet.Followers);
                     break;
                 default:
                     System.err.println("[ERROR]: invalid weighting type; no weighting performed");

@@ -209,6 +209,7 @@ public final class TwitterDriver {
             newTweet.TimeStamp  =   status.getCreatedAt().getTime();
             newTweet.Date       =   formatter.format(status.getCreatedAt());
             // Mood goes here, sequentially
+            newTweet.Weight     =   1.0f;
             newTweet.Keyword    =   curKeyword;
             newTweet.DateBin    =   TweetBinner.getDateBin(newTweet.TimeStamp);
             newTweet.Text       =   status.getText().toString();

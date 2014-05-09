@@ -16,6 +16,7 @@ public class TweetData {
     public long TimeStamp;
     public String Date;
     public float Mood;
+    public float Weight;
     public String Keyword;
     public String DateBin; //<DATE>::0 is before market hours, <DATE>::1 is during market hours
     public String Text;
@@ -30,6 +31,7 @@ public class TweetData {
         this.TimeStamp = td.TimeStamp;
         this.Date = td.Date;
         this.Mood = td.Mood;
+        this.Weight = td.Weight;
         this.Keyword = td.Keyword;
         this.DateBin = td.DateBin;
         this.Text = td.Text;
@@ -41,6 +43,7 @@ public class TweetData {
     }
 
     public String toString(){
-        return ID+ " " + User + " "+Followers+" "+Retweets+" "+TimeStamp+" "+Date+" "+Mood+" "+Keyword+" "+DateBin+" "+Text+ " " + DELIM;
+        return ID+ " " + User + " "+Followers+" "+Retweets+" "+TimeStamp+" "+Date+" "+Mood+" "+Weight+" "+Keyword
+                +" "+DateBin+" "+Text+ " " + DELIM;
     }
 }

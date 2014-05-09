@@ -115,7 +115,7 @@ public class Driver {
                 " (\"MSFT\",\"GOOG\", \"AAPL\") and startDate = \"2014-01-01\" and endDate = \"2014-02-17\"");
         */
 
-        List<String> symbols = Arrays.asList("GOOG");
+        List<String> symbols = Arrays.asList("AAPL");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
                 dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)), dateNoTime.format(new Date(today.getTime()-0*MS_IN_DAY))));
 
@@ -148,6 +148,9 @@ public class Driver {
 
         // MOOD
         curTweet.Mood = Float.parseFloat(sc2.next());
+
+        // Weight
+        curTweet.Weight = Float.parseFloat(sc2.next());
 
         // KEYWORD
         curTweet.Keyword = sc2.next();
@@ -281,7 +284,7 @@ public class Driver {
 	if (! db.isOpen()) {
 	    db.open(false);//open the database if it is not open
 	}
-	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	String q = "INSERT INTO Tweets VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 	SQLiteStatement st = db.prepare(q);
 	st.bind(1, td.ID);
 	st.bind(2, td.User);
@@ -289,10 +292,11 @@ public class Driver {
 	st.bind(4, td.Retweets);
 	st.bind(5, td.TimeStamp);
     st.bind(6, td.Date);
-	st.bind(7, td.Mood);
-	st.bind(8, td.Keyword);
-	st.bind(9, td.DateBin);
-	st.bind(10, td.Text);
+    st.bind(7, td.Mood);
+    st.bind(8, td.Weight);
+	st.bind(9, td.Keyword);
+	st.bind(10, td.DateBin);
+	st.bind(11, td.Text);
 	st.step();
 	st.dispose();
     }
@@ -338,7 +342,7 @@ public class Driver {
 	    st.dispose();
 	    String t = "CREATE TABLE Tweets (" 
 		+ "ID varchar(30), User varchar(30), Followers Bigint, Retweets bigint, "
-		+ "Timestamp Bigint, Date varchar(10), Mood varchar(30), Keyword varchar(30), "
+		+ "Timestamp Bigint, Date varchar(10), Mood varchar(30), Weight varchar(30), Keyword varchar(30), "
 		+ "DateBin varchar(13), Text varchar(140) );";
 	    st = db.prepare(t);
 	    st.step();
