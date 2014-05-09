@@ -246,4 +246,12 @@ public final class TwitterDriver {
 
 
     }*/
+
+    public static ArrayList<TweetData> deepCopyTweets(ArrayList<TweetData> orig){
+        ArrayList<TweetData> copy = new ArrayList<TweetData>(orig.size());
+        for (TweetData td : orig){
+            copy.add(new TweetData(td));
+        }
+        return copy;
+    }
 }

@@ -20,6 +20,21 @@ public class TweetData {
     public String DateBin; //<DATE>::0 is before market hours, <DATE>::1 is during market hours
     public String Text;
 
+    public TweetData(){}
+
+    public TweetData(TweetData td){
+        this.ID = td.ID;
+        this.User = td.User;
+        this.Followers = td.Followers;
+        this.Retweets = td.Retweets;
+        this.TimeStamp = td.TimeStamp;
+        this.Date = td.Date;
+        this.Mood = td.Mood;
+        this.Keyword = td.Keyword;
+        this.DateBin = td.DateBin;
+        this.Text = td.Text;
+    }
+
     private String getDateAsString(){
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(new Date(TimeStamp));

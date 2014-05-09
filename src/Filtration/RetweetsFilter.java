@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * Created by Stefan Mellem on 5/7/14.
  */
-public class RetweetsFilter {
+public class RetweetsFilter extends Filter {
     private int threshold;
 
     public RetweetsFilter(){

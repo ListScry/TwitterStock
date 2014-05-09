@@ -1,3 +1,4 @@
+import Filtration.*;
 import SearchTwitter.TweetData;
 import YQL.YQLHistoricalData;
 import YQL.YQLHistoricalDataParser;
@@ -21,12 +22,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static SearchTwitter.TwitterDriver.deepCopyTweets;
+
 /**
  * Created by frsandstone77 on 2/21/14.
  */
 public class Driver {
 
-    static ArrayList<TweetData> tweets;
+    static ArrayList<ArrayList<TweetData> > tweetLists;
     static ArrayList<YQLHistoricalData> stocks;
 
     private static final long MS_IN_DAY = 1000*60*60*24;
@@ -35,12 +38,17 @@ public class Driver {
     private static void writeFiles(){
         try {
             // Setup
-            PrintStream outTweet = new PrintStream(new FileOutputStream("twitter.txt"));
+            ArrayList<PrintStream> outTweetStreams = new ArrayList<PrintStream>();
+            for (int i=0; i<tweetLists.size(); i++){
+                outTweetStreams.add(new PrintStream(new FileOutputStream("twitter"+i+".txt")));
+            }
             PrintStream outStock = new PrintStream(new FileOutputStream("stock.txt"));
 
             // Output Tweets and Stocks
-            for(TweetData tweet : tweets){
-                outTweet.println(tweet.toString());
+            for (int i=0; i<tweetLists.size(); i++){
+                for(TweetData tweet : tweetLists.get(i)){
+                    outTweetStreams.get(i).println(tweet.toString());
+                }
             }
 
             for (YQLHistoricalData datum : stocks){
@@ -48,7 +56,9 @@ public class Driver {
             }
 
             // Close Filestreams
-            outTweet.close();
+            for (int i=0; i<tweetLists.size(); i++){
+                outTweetStreams.get(i).close();
+            }
             outStock.close();
 
         } catch (FileNotFoundException e) {
@@ -60,17 +70,36 @@ public class Driver {
         TwitterDriver.setUpTwitter();
 
         // Setup
+        tweetLists = new ArrayList<ArrayList<TweetData>>();
         Date today = Calendar.getInstance().getTime();
-        String keyword = "\"GOOG\"";
+        String keyword = "\"$AAPL\"";
 
         // Do Query
-        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-3*MS_IN_DAY));
+        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-0*MS_IN_DAY));
 
         // How many tweets did we get?
         System.out.println("Total Tweets:" + statuses.size());
 
         // Convert from Twitter's Status object to our Tweet data structure
-        tweets = TwitterDriver.convertStatusToTweet(statuses);
+        tweetLists.add(TwitterDriver.convertStatusToTweet(statuses));
+
+        // Set up filtration and/or weighting
+        ArrayList<Filter> filters = new ArrayList<Filter>();
+        filters.add(new SpamFilter());
+        filters.add(new RetweetsFilter());
+        filters.add(new FollowersFilter());
+        filters.add(new FeelFilter());
+        filters.add(new FollowersWeighter());
+        filters.add(new RetweetsWeighter());
+
+        // Run filtration and/or weighting
+        for (Filter filter : filters){
+            ArrayList<TweetData> toBeFiltered = deepCopyTweets(tweetLists.get(0));
+            System.out.println(filter.toString());
+            filter.filterTweets(toBeFiltered);
+            tweetLists.add(toBeFiltered);
+        }
+
     }
 
     private static void runStocks(){
@@ -88,7 +117,7 @@ public class Driver {
 
         List<String> symbols = Arrays.asList("GOOG");
         String result = YQLQueryClient.queryJSON(YQLQueryClient.getHistoricalDataQueryString(symbols,
-                dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)), dateNoTime.format(new Date(today.getTime()-3*MS_IN_DAY))));
+                dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)), dateNoTime.format(new Date(today.getTime()-0*MS_IN_DAY))));
 
         stocks = YQLHistoricalDataParser.parse(result);
 
@@ -181,7 +210,7 @@ public class Driver {
         boolean b;
 
         // INITIALIZATION STUFF
-        tweets = new ArrayList<TweetData>();
+        tweetLists = new ArrayList<ArrayList<TweetData> >();
         stocks = new ArrayList<YQLHistoricalData>();
         TweetData curTweet;
         YQLHistoricalData curStock;
@@ -189,15 +218,20 @@ public class Driver {
 
         // READ IN TWEET DATA
         try {
-            sc2 = new Scanner(new File("twitter.txt"));
+            int i=0;
+            while (true){
+                sc2 = new Scanner(new File("twitter"+i+".txt"));
+                tweetLists.add(new ArrayList<TweetData>());
+                while (b = sc2.hasNext()) {
+                    curTweet = readTweetFromFile(sc2);
+                    tweetLists.get(i).add(curTweet);
+                }
+                i++;
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        while (b = sc2.hasNext()) {
-            curTweet = readTweetFromFile(sc2);
-            tweets.add(curTweet);
-        }
 
         // READ IN STOCK DATA
         try {
@@ -329,16 +363,18 @@ public class Driver {
         //inputFiles();
 
 	try {
-	    SQLiteConnection db = openDB(new File("actualdata.sqlite"));
-	    System.out.println("After opening database.");
-	    System.out.println("Successfully opened created both tables.");
-	    for(TweetData tweet : tweets) {
-		store(db, tweet);
-	    }
-	    for(YQLHistoricalData stock : stocks) {
-		store(db, stock);
-	    }
-	    db.dispose();
+        for (int i=0; i<tweetLists.size(); i++){
+            SQLiteConnection db = openDB(new File("actualdata"+i+".sqlite"));
+            System.out.println("After opening database: "+i+".");
+            System.out.println("Successfully opened created both tables.");
+            for(TweetData tweet : tweetLists.get(i)) {
+                store(db, tweet);
+            }
+            for(YQLHistoricalData stock : stocks) {
+                store(db, stock);
+            }
+            db.dispose();
+        }
 	} catch (SQLiteException ex) {
 	   ex.printStackTrace();
 	}
