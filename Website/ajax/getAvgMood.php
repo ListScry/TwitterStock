@@ -16,7 +16,7 @@ try
 {
   // Open the database
   $db = new PDO('sqlite:actualdata.sqlite');
-  $sql = "SELECT Mood,DateBin FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate' AND Keyword=='$symbol')" ;
+  $sql = "SELECT Mood,Weight,DateBin FROM Tweets WHERE (Date>='$startDate' AND Date<='$endDate' AND Keyword=='$symbol')" ;
 
   // Perform the query
   $statement = $db->prepare($sql);
@@ -25,22 +25,22 @@ try
 
   // Sum the Mood values for each DateBin in the range
   $totals = array();
-  $counts = array();
+  $weights = array();
   foreach($results as $row){
     if (!array_key_exists($row["DateBin"],$totals)){
       $totals[$row["DateBin"]]=$row["Mood"];
-      $counts[$row["DateBin"]]=1;
+      weights[$row["DateBin"]]=$row["Weight"];
     }
     else {
       $totals[$row["DateBin"]]+=$row["Mood"];
-      $counts[$row["DateBin"]]++;
+      weights[$row["DateBin"]]+=$row["Weight"];
     }
   }
 
   // Calculate the average Mood for each DateBin in the range
   $averages = array();
   foreach($totals as $datebin => $val){
-    $averages[$datebin]=$val/$counts[$datebin];
+    $averages[$datebin]=$val/$weights[$datebin];
   }
 
   // Format & output results
