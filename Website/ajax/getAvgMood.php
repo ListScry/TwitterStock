@@ -28,11 +28,11 @@ try
   $weights = array();
   foreach($results as $row){
     if (!array_key_exists($row["DateBin"],$totals)){
-      $totals[$row["DateBin"]]=$row["Mood"];
+      $totals[$row["DateBin"]]=$row["Mood"]*$row["Weight"];
       weights[$row["DateBin"]]=$row["Weight"];
     }
     else {
-      $totals[$row["DateBin"]]+=$row["Mood"];
+      $totals[$row["DateBin"]]+=$row["Mood"]*$row["Weight"];
       weights[$row["DateBin"]]+=$row["Weight"];
     }
   }

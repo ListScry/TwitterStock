@@ -37,6 +37,6 @@ public class RetweetsFilter extends Filter {
     }
 
     public String toString(){
-        return "RetweetsFilter with threshold: "+threshold;
+        return "RetweetsFilter"+threshold;
     }
 }

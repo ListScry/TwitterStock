@@ -30,6 +30,7 @@ import static SearchTwitter.TwitterDriver.deepCopyTweets;
 public class Driver {
 
     static ArrayList<ArrayList<TweetData> > tweetLists;
+    static ArrayList<String> filterNames;
     static ArrayList<YQLHistoricalData> stocks;
 
     private static final long MS_IN_DAY = 1000*60*60*24;
@@ -70,7 +71,9 @@ public class Driver {
         TwitterDriver.setUpTwitter();
 
         // Setup
-        tweetLists = new ArrayList<ArrayList<TweetData>>();
+        final int NUMFILTERSETS = 17;
+        tweetLists = new ArrayList<ArrayList<TweetData>>(NUMFILTERSETS+1);
+        filterNames = new ArrayList<String>(NUMFILTERSETS);
         Date today = Calendar.getInstance().getTime();
         String keyword = "\"$AAPL\"";
 
@@ -81,23 +84,62 @@ public class Driver {
         System.out.println("Total Tweets:" + statuses.size());
 
         // Convert from Twitter's Status object to our Tweet data structure
-        tweetLists.add(TwitterDriver.convertStatusToTweet(statuses));
+        ArrayList<TweetData> unfilteredTweets = TwitterDriver.convertStatusToTweet(statuses);
 
         // Set up filtration and/or weighting
-        ArrayList<Filter> filters = new ArrayList<Filter>();
-        filters.add(new SpamFilter());
-        filters.add(new RetweetsFilter());
-        filters.add(new FollowersFilter());
-        filters.add(new FeelFilter());
-        filters.add(new FollowersWeighter());
-        filters.add(new RetweetsWeighter());
+        // Base filters
+        Filter nof = new NoFilter();
+        Filter spf = new SpamFilter();
+        Filter rtf100 = new RetweetsFilter(100);
+        Filter rtf1000 = new RetweetsFilter(1000);
+        Filter rtf10000 = new RetweetsFilter(10000);
+        Filter fof100 = new FollowersFilter(100);
+        Filter fof1000 = new FollowersFilter(1000);
+        Filter fof10000 = new FollowersFilter(10000);
+        Filter fef = new FeelFilter();
+        Filter fow_lin = new FollowersWeighter(Weighter.WeightingType.LINEAR);
+        Filter fow_sqr = new FollowersWeighter(Weighter.WeightingType.SQRT);
+        Filter fow_log = new FollowersWeighter(Weighter.WeightingType.LOG);
+        Filter fow_asy = new FollowersWeighter(Weighter.WeightingType.EXPASYMP);
+        Filter rtw_lin = new RetweetsWeighter(Weighter.WeightingType.LINEAR);
+        Filter rtw_sqr = new RetweetsWeighter(Weighter.WeightingType.SQRT);
+        Filter rtw_log = new RetweetsWeighter(Weighter.WeightingType.LOG);
+        Filter rtw_asy = new RetweetsWeighter(Weighter.WeightingType.EXPASYMP);
+
+        // List of filter sets to be applied (each set will produce its own filtered dataset)
+        ArrayList<ArrayList<Filter> > filterSets = new ArrayList<ArrayList<Filter> >(NUMFILTERSETS);
+        for (int i=0; i<NUMFILTERSETS; i++)
+            filterSets.add(new ArrayList<Filter>());
+        filterSets.get(0).add(nof);
+        filterSets.get(1).add(spf);
+        filterSets.get(2).add(rtf100);
+        filterSets.get(3).add(rtf1000);
+        filterSets.get(4).add(rtf10000);
+        filterSets.get(5).add(fof100);
+        filterSets.get(6).add(fof1000);
+        filterSets.get(7).add(fof10000);
+        filterSets.get(8).add(fef);
+        filterSets.get(9).add(fow_lin);
+        filterSets.get(10).add(fow_sqr);
+        filterSets.get(11).add(fow_log);
+        filterSets.get(12).add(fow_asy);
+        filterSets.get(13).add(rtw_lin);
+        filterSets.get(14).add(rtw_sqr);
+        filterSets.get(15).add(rtw_log);
+        filterSets.get(16).add(rtw_asy);
+        // Sets with multiple filters
+        //filterSets.get(17).add(spf);
+        //filterSets.get(17).add(fef);
 
         // Run filtration and/or weighting
-        for (Filter filter : filters){
-            ArrayList<TweetData> toBeFiltered = deepCopyTweets(tweetLists.get(0));
-            System.out.println(filter.toString());
-            filter.filterTweets(toBeFiltered);
-            tweetLists.add(toBeFiltered);
+        for (int i=0 ; i<filterSets.size(); i++){
+            filterNames.add("");
+            for (Filter filter : filterSets.get(i)){
+                ArrayList<TweetData> toBeFiltered = deepCopyTweets(unfilteredTweets);
+                filterNames.set(i, filterNames.get(i).concat(filter.toString()));
+                filter.filterTweets(toBeFiltered);
+                tweetLists.add(toBeFiltered);
+            }
         }
 
     }
@@ -368,8 +410,8 @@ public class Driver {
 
 	try {
         for (int i=0; i<tweetLists.size(); i++){
-            SQLiteConnection db = openDB(new File("actualdata"+i+".sqlite"));
-            System.out.println("After opening database: "+i+".");
+            SQLiteConnection db = openDB(new File("actualdata_"+filterNames.get(i)+".sqlite"));
+            System.out.println("After opening database: "+filterNames.get(i)+".");
             System.out.println("Successfully opened created both tables.");
             for(TweetData tweet : tweetLists.get(i)) {
                 store(db, tweet);

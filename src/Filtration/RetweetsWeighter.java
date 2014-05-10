@@ -53,15 +53,15 @@ public class RetweetsWeighter extends Weighter {
     public String toString(){
         switch (type){
             case LINEAR:
-                return "RetweetsWeighter with type: LINEAR";
+                return "RetweetsWeighterLINEAR";
             case SQRT:
-                return "RetweetsWeighter with type: SQRT";
+                return "RetweetsWeighterSQRT";
             case LOG:
-                return "RetweetsWeighter with type: LOG";
+                return "RetweetsWeighterLOG";
             case EXPASYMP:
-                return "RetweetsWeighter with type: EXPASYMP";
+                return "RetweetsWeighterEXPASYMP";
             default:
-                return "RetweetsWeighter with type: [INVALID TYPE]";
+                return "RetweetsWeighter[INVALID TYPE]";
         }
     }
 }

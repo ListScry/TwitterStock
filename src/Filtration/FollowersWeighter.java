@@ -53,15 +53,15 @@ public class FollowersWeighter extends Weighter {
     public String toString(){
         switch (type){
             case LINEAR:
-                return "FollowersWeighter with type: LINEAR";
+                return "FollowersWeighterLINEAR";
             case SQRT:
-                return "FollowersWeighter with type: SQRT";
+                return "FollowersWeighterSQRT";
             case LOG:
-                return "FollowersWeighter with type: LOG";
+                return "FollowersWeighterLOG";
             case EXPASYMP:
-                return "FollowersWeighter with type: EXPASYMP";
+                return "FollowersWeighterEXPASYMP";
             default:
-                return "FollowersWeighter with type: [INVALID TYPE]";
+                return "FollowersWeighter[INVALID TYPE]";
         }
     }
 }

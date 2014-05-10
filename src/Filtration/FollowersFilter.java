@@ -37,6 +37,6 @@ public class FollowersFilter extends Filter {
     }
 
     public String toString(){
-        return "FollowersFilter with threshold: "+threshold;
+        return "FollowersFilter"+threshold;
     }
 }
