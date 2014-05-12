@@ -1,3 +1,5 @@
+package DataStorage;
+
 import SearchTwitter.TweetData;
 import Stocks.HistoricalStockData;
 import com.almworks.sqlite4java.SQLite;

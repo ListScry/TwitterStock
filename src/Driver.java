@@ -1,12 +1,12 @@
+import DataStorage.FileStorage;
+import DataStorage.TwitterStockDatabase;
 import Filtration.*;
 import SearchTwitter.TweetData;
 import Stocks.*;
 import twitter4j.Status;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+
 import com.almworks.sqlite4java.*;
 
 import java.text.SimpleDateFormat;
@@ -27,17 +27,12 @@ public class Driver {
     static ArrayList<ArrayList<TweetData> > filteredTweetLists;
 
     private static final long MS_IN_DAY = 1000*60*60*24;
-    private static SimpleDateFormat dateNoTime = new SimpleDateFormat("yyyy-MM-dd");
 
-    private static void runTwitter(){
+    private static void runTwitter(String keyword, Date startDate, Date endDate){
         TwitterDriver.setUpTwitter();
 
-        // Setup
-        Date today = Calendar.getInstance().getTime();
-        String keyword = "\"$AAPL\"";
-
         // Do Query
-        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, new Date(today.getTime()-0*MS_IN_DAY));
+        ArrayList<Status> statuses = TwitterDriver.queryKeyword(keyword, startDate, endDate);
 
         // How many tweets did we get?
         System.out.println("Total Tweets:" + statuses.size());
@@ -47,7 +42,7 @@ public class Driver {
     }
 
     private static ArrayList<ArrayList<Filter> > getMyFilterSets(){
-        final int NUMFILTERSETS = 17;
+        final int NUMFILTERSETS = 3;
 
         // Set up filtration and/or weighting
         // Base filters
@@ -76,6 +71,7 @@ public class Driver {
         filterSets.get(0).add(nof);
         filterSets.get(1).add(spf);
         filterSets.get(2).add(rtf100);
+        /*
         filterSets.get(3).add(rtf1000);
         filterSets.get(4).add(rtf10000);
         filterSets.get(5).add(fof100);
@@ -93,6 +89,7 @@ public class Driver {
         // Sets with multiple filters
         //filterSets.get(17).add(spf);
         //filterSets.get(17).add(fef);
+        */
 
         return filterSets;
     }
@@ -113,16 +110,14 @@ public class Driver {
         }
     }
 
-    private static void runStocks(){
-        //set up parameters for stock data to retrieve
-        Date today = Calendar.getInstance().getTime();
-        List<String> symbols = Arrays.asList("AAPL");
+    private static void runStocks(List<String> symbols, Date startDate, Date endDate){
+        //data retriever
+        StockDataRetriever sdr = new YQLStockDataRetriever();
+        //date formatter
+        SimpleDateFormat dateNoTime = new SimpleDateFormat("yyyy-MM-dd");
 
         //retrieve the data
-        StockDataRetriever sdr = new YQLStockDataRetriever();
-
-        stocks = sdr.getStockData(symbols, dateNoTime.format(new Date(today.getTime() - 14 * MS_IN_DAY)),
-                dateNoTime.format(new Date(today.getTime() - 0 * MS_IN_DAY)));
+        stocks = sdr.getStockData(symbols, dateNoTime.format(startDate),dateNoTime.format(endDate));
     }
 
 
@@ -143,24 +138,34 @@ public class Driver {
 
 
     public static void main(String[] args) {
+        // Set up dates and symbols/keywords for which to get data
+        //  - dates
+        Date today = Calendar.getInstance().getTime();
+        Date endDate = new Date(today.getTime() - 3 * MS_IN_DAY);
+        Date startDate = new Date(endDate.getTime() - 7 * MS_IN_DAY);
+        //  - symbols/keywords
+        String twitterKeyword = "\"$AAPL\"";
+        List<String> stockSymbols = Arrays.asList("AAPL");
+
+
         // Gets tweets from Twitter
-	    runTwitter();
+	    runTwitter(twitterKeyword,startDate,endDate);
 
         // Apply filter sets to tweets
         filterTweets(getMyFilterSets());
 
         // Gets stocks form Yahoo
-        runStocks();
+        runStocks(stockSymbols,startDate,endDate);
 
         // Write data to file
-        FileStorage.writeFiles(filteredTweetLists,stocks);
+        FileStorage.writeFiles(filteredTweetLists, stocks);
 
         System.out.println("Files written.");
         // Input data from files
-        //FileStorage.inputFiles();
+        //FileStorage.inputFiles(filteredTweetLists, stocks);
 
         // Write data into database
-        writeToDatabase("actualdata");
+        writeToDatabase("testdata");
     }
 
 }

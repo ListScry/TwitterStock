@@ -79,11 +79,6 @@ public final class TwitterDriver {
         return earliestID;
     }
 
-    // temporary - delete later
-    public static void printIDs(QueryResult result){
-        for( Status status : result.getTweets() ){  System.out.println("" + status.getId());    }
-    }
-
     public static void printStatus(Status status){
         String message = status.getText();
         String username = status.getUser().getScreenName();
@@ -115,25 +110,7 @@ public final class TwitterDriver {
         return tempCal.getTime();
     }
 
-    // Helper method to perform queries for the entire week
-    // TODO: actually add the performQuery portion of this
-    public static void queryWeek(){
-        String startDate_str, endDate_str;
-        Date startDate,endDate;
-
-        // for loop through past week
-        startDate = Calendar.getInstance().getTime();
-        for(int day = 0; day < 6; day ++){
-            endDate = addDay(startDate, 1);
-
-            startDate_str = "" + startDate.getYear() + "-" + startDate.getMonth() + startDate.getDay();
-            endDate_str = "" + endDate.getYear() + "-" + endDate.getMonth() + endDate.getDay();
-
-            startDate = addDay(startDate,-1);
-        }
-    }
-
-    public static ArrayList<Status> queryKeyword(String keyword, Date date){
+    public static ArrayList<Status> queryKeyword(String keyword, Date startDate, Date endDate){
 
         int totalTweets = 200; //15000; // max 180 queries per 15 minutes
         int resultsPerQuery = 100;
@@ -143,10 +120,6 @@ public final class TwitterDriver {
         curKeyword = keyword;
 
         ArrayList<Status> allStatuses = new ArrayList<Status>();
-
-        // ------------- Do date stuff
-        Date startDate = addDay(date,-7); //start 1 week prior to date
-        Date endDate = date; //end at passed date (default today in Driver.java)
 
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String startDate_str = formatter.format(startDate);
@@ -169,15 +142,13 @@ public final class TwitterDriver {
 
             // Store all of these statuses
             for(Status status : result.getTweets()){
-                // TODO: Skip if this tweet is outside the range.  Twitter API bug
+                // TODO: Skip if this tweet is outside the range?  Possible Twitter API bug
                 allStatuses.add(status);
             }
 
             if (lastID==previousLastID)
                 break;
         }
-
-
 
         return allStatuses;
     }
@@ -199,11 +170,11 @@ public final class TwitterDriver {
 
             //System.out.println(status.getUser().getScreenName().toString());
             //System.out.println(status.getCreatedAt());
-            //it appears that all times are PACIFIC
+            //it appears that all times given by Twitter are PACIFIC
 
             // Prep with data
             newTweet.ID         =   "" + status.getId();
-            newTweet.User       =   status.getUser().getScreenName().toString();
+            newTweet.User       =   status.getUser().getScreenName();
             newTweet.Followers  =   status.getUser().getFollowersCount();
             newTweet.Retweets   =   status.getRetweetCount();
             newTweet.TimeStamp  =   status.getCreatedAt().getTime();
@@ -212,7 +183,7 @@ public final class TwitterDriver {
             newTweet.Weight     =   1.0f;
             newTweet.Keyword    =   curKeyword;
             newTweet.DateBin    =   TweetBinner.getDateBin(newTweet.TimeStamp);
-            newTweet.Text       =   status.getText().toString();
+            newTweet.Text       =   status.getText();
 
             // Calculate and set Mood
             setMood(newTweet);
@@ -221,33 +192,10 @@ public final class TwitterDriver {
             tweets.add(newTweet);
         }
 
-
         return tweets;
     }
 
-
-
-    /*public static void main(String[] args) {
-        setUpTwitter();
-
-        // Setup
-        Date date = Calendar.getInstance().getTime();
-        String keyword = "\"AAPL\"";
-
-        // Do Query
-        ArrayList<Status> statuses = queryKeyword(keyword,date);
-        ArrayList<TweetData> tweets = convertStatusToTweet(statuses);
-
-
-        // Do Something With Tweets 
-        System.out.println("Total Tweets:" + tweets.size());
-        for(TweetData tweet : tweets){
-            System.out.println( tweet.toString() );
-        }
-
-
-    }*/
-
+    /* utility for making multiple differently-filtered copies of the same base dataset */
     public static ArrayList<TweetData> deepCopyTweets(ArrayList<TweetData> orig){
         ArrayList<TweetData> copy = new ArrayList<TweetData>(orig.size());
         for (TweetData td : orig){
