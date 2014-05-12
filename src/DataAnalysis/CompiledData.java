@@ -1,13 +1,11 @@
 package DataAnalysis;
 
 import SearchTwitter.TweetData;
-import YQL.YQLHistoricalData;
+import Stocks.HistoricalStockData;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -22,7 +20,7 @@ public class CompiledData {
     private long start, end;
     private int numDays;
     private ArrayList<ArrayList<TweetData> > tweetBuckets;
-    private ArrayList<ArrayList<YQLHistoricalData> > stockBuckets;
+    private ArrayList<ArrayList<HistoricalStockData> > stockBuckets;
     private static final long MS_IN_DAY = 1000*60*60*24;
 
     private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -32,7 +30,7 @@ public class CompiledData {
      start is floored to the beginning of its day
      end is ceilinged to the end of its day
      */
-    public CompiledData(ArrayList<TweetData> tweets, ArrayList<YQLHistoricalData> stocks, long start, long end){
+    public CompiledData(ArrayList<TweetData> tweets, ArrayList<HistoricalStockData> stocks, long start, long end){
         long start_floor = (start/MS_IN_DAY)*MS_IN_DAY; //floor to previous day beginning
         long end_ceil = (1+((end-1)/MS_IN_DAY))*MS_IN_DAY; //ceil to next day beginning
 
@@ -48,14 +46,14 @@ public class CompiledData {
         numDays = (int)((this.end-this.start)/MS_IN_DAY);
         //initialize our buckets
         tweetBuckets = new ArrayList<ArrayList<TweetData> >(2*numDays);
-        stockBuckets = new ArrayList<ArrayList<YQLHistoricalData> >(2*numDays);
+        stockBuckets = new ArrayList<ArrayList<HistoricalStockData> >(2*numDays);
 
         //loop through passed-in data and put into the appropriate buckets
         //check timezone information?
         for (TweetData tweet : tweets){
 
         }
-        for (YQLHistoricalData stock : stocks){
+        for (HistoricalStockData stock : stocks){
 
         }
     }
@@ -69,7 +67,7 @@ public class CompiledData {
         return null;
     }
 
-    public ArrayList<YQLHistoricalData> getStockData(String timestamp){
+    public ArrayList<HistoricalStockData> getStockData(String timestamp){
         return null;
     }
 

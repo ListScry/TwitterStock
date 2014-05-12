@@ -1,4 +1,4 @@
-package YQL;
+package Stocks;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
@@ -14,7 +14,7 @@ public final class YQLHistoricalDataParser {
     private static JsonParser parser;
     private static Gson gson;
 
-    public static ArrayList<YQLHistoricalData> parse(String json){
+    public static ArrayList<HistoricalStockData> parse(String json){
         //root object from json
         JsonElement rootNode = parser.parse(json);
 
@@ -23,8 +23,8 @@ public final class YQLHistoricalDataParser {
             JsonObject query = fullJSONresponse.getAsJsonObject("query");
             JsonObject results = query.getAsJsonObject("results");
 
-            Type fillType = new TypeToken<ArrayList<YQLHistoricalData>>(){}.getType();
-            ArrayList<YQLHistoricalData> ret = gson.fromJson(results.get("quote"), fillType);
+            Type fillType = new TypeToken<ArrayList<HistoricalStockData>>(){}.getType();
+            ArrayList<HistoricalStockData> ret = gson.fromJson(results.get("quote"), fillType);
             return ret;
         }
         else{

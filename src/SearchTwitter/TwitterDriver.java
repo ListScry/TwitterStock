@@ -135,7 +135,7 @@ public final class TwitterDriver {
 
     public static ArrayList<Status> queryKeyword(String keyword, Date date){
 
-        int totalTweets = 15000; // max 180 queries per 15 minutes
+        int totalTweets = 200; //15000; // max 180 queries per 15 minutes
         int resultsPerQuery = 100;
         int numQueries = totalTweets / resultsPerQuery;
 

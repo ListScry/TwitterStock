@@ -1,6 +1,4 @@
-package YQL;
-
-import com.google.gson.*;
+package Stocks;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
