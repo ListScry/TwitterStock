@@ -15,16 +15,16 @@ import edu.stanford.nlp.util.CoreMap;
  * modifications by Stefan Mellem
  */
 
-public class SCNLP_Analyzer {
+public class SCNLP_Analyzer implements SentimentAnalyzer {
 
-    static Properties props;
-    static StanfordCoreNLP pipeline;
+    private Properties props;
+    private StanfordCoreNLP pipeline;
 
-    public static float findSentiment(String line) {
+    public float findSentiment(String text) {
         float totalSentiment = 0.0f;
         int count = 0;
-        if (line != null && line.length() > 0) {
-            Annotation annotation = pipeline.process(line);
+        if (text != null && text.length() > 0) {
+            Annotation annotation = pipeline.process(text);
 
             //System.out.println(line);
             for (CoreMap sentence : annotation.get(CoreAnnotations.SentencesAnnotation.class)) {
@@ -45,7 +45,7 @@ public class SCNLP_Analyzer {
         return totalSentiment/count;
     }
 
-    public static void init(){
+    public SCNLP_Analyzer(){
         props = new Properties();
         props.setProperty("annotators", "tokenize, ssplit, parse, sentiment");
         pipeline = new StanfordCoreNLP(props);

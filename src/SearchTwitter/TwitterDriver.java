@@ -1,5 +1,6 @@
 package SearchTwitter;
 
+import SentimentAnalysis.SCNLP_Analyzer;
 import SentimentAnalysis.SentimentAnalyzer;
 import twitter4j.Status;
 import twitter4j.Twitter;
@@ -16,6 +17,7 @@ public final class TwitterDriver {
 
     static Twitter twitter;
     static String curKeyword;
+    static SentimentAnalyzer moodFinder;
 
     public static void setUpTwitter(){
         //twitter = new TwitterFactory().getSingleton();
@@ -30,7 +32,7 @@ public final class TwitterDriver {
         twitter = tf.getInstance();
 
         //for calculating mood values of each tweet as we convert from Status to TweetData
-        SentimentAnalyzer.init();
+        moodFinder = new SCNLP_Analyzer();
     }
 
 
@@ -100,16 +102,6 @@ public final class TwitterDriver {
         System.out.println(result.getTweets().size());
     }
 
-    public static Date addDay(Date date, int num){
-        // LOL this is awful.
-        // Only way I can find to subtract a day from a Date object
-        Calendar tempCal = Calendar.getInstance();
-        tempCal.setTime(date);
-        tempCal.add(Calendar.DATE, num);
-
-        return tempCal.getTime();
-    }
-
     public static ArrayList<Status> queryKeyword(String keyword, Date startDate, Date endDate){
 
         int totalTweets = 200; //15000; // max 180 queries per 15 minutes
@@ -154,7 +146,7 @@ public final class TwitterDriver {
     }
 
     public static void setMood(TweetData tweet){
-        tweet.Mood = SentimentAnalyzer.findSentiment(tweet.Text);
+        tweet.Mood = moodFinder.findSentiment(tweet.Text);
     }
 
     public static ArrayList<TweetData> convertStatusToTweet(ArrayList<Status> statuses){
