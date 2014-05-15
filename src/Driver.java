@@ -158,9 +158,9 @@ public class Driver {
         runStocks(stockSymbols,startDate,endDate);
 
         // Write data to file
-        FileStorage.writeFiles(filteredTweetLists, stocks);
+        //FileStorage.writeFiles(filteredTweetLists, stocks);
 
-        System.out.println("Files written.");
+        //System.out.println("Files written.");
         // Input data from files
         //FileStorage.inputFiles(filteredTweetLists, stocks);
 

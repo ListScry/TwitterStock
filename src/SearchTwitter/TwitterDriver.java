@@ -36,7 +36,7 @@ public final class TwitterDriver {
     }
 
 
-    public static QueryResult performQuery(String keyword, long id_before){
+    private static QueryResult performQuery(String keyword, long id_before){
         try{
             // Set up query
             Query query = new Query();
@@ -69,7 +69,7 @@ public final class TwitterDriver {
     }
 
     // Get earliest tweet - used to query for "only tweets older than X"
-    public static long oldestResult(QueryResult result){
+    private static long oldestResult(QueryResult result){
 
         long earliestID = result.getTweets().get(0).getId();
         for( Status status : result.getTweets() ){
@@ -81,7 +81,7 @@ public final class TwitterDriver {
         return earliestID;
     }
 
-    public static void printStatus(Status status){
+    private static void printStatus(Status status){
         String message = status.getText();
         String username = status.getUser().getScreenName();
         String date = status.getCreatedAt().toString();
@@ -145,7 +145,7 @@ public final class TwitterDriver {
         return allStatuses;
     }
 
-    public static void setMood(TweetData tweet){
+    private static void setMood(TweetData tweet){
         tweet.Mood = moodFinder.findSentiment(tweet.Text);
     }
 
